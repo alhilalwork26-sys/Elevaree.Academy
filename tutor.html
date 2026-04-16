@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ═══════════════════════════════════════════════
+       SEO META TAGS
+  ═══════════════════════════════════════════════ -->
+  <title>Tim Tutor Berpengalaman — Elevaree.Academy</title>
+  <meta name="description" content="Kenali para tutor bersertifikat internasional Elevaree.Academy. CELTA, DELTA, TEFL certified. Spesialis Speaking, IELTS, Business English, Kids & Teens." />
+  <meta name="keywords" content="tutor bahasa inggris, guru bahasa inggris bersertifikat, IELTS tutor, CELTA, kursus bahasa inggris elevaree" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#BC6186" />
+  <link rel="canonical" href="https://elevaree.academy/tutor.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://elevaree.academy/tutor.html" />
+  <meta property="og:title" content="Tim Tutor Berpengalaman — Elevaree.Academy" />
+  <meta property="og:description" content="6 tutor bersertifikat internasional siap membimbing perjalanan Bahasa Inggrismu." />
+  <meta property="og:image" content="https://elevaree.academy/og-image.jpg" />
+  <meta property="og:locale" content="id_ID" />
+  <meta property="og:site_name" content="Elevaree.Academy" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tim Tutor — Elevaree.Academy" />
+  <meta name="twitter:description" content="Belajar bersama tutor bersertifikat CELTA, DELTA, TEFL internasional." />
+  <meta name="twitter:image" content="https://elevaree.academy/og-image.jpg" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Elevaree.Academy",
+    "url": "https://elevaree.academy",
+    "description": "Kursus Bahasa Inggris premium dengan tutor bersertifikat internasional",
+    "employee": [
+      { "@type": "Person", "name": "Rina Hartati", "jobTitle": "Speaking Specialist", "hasCredential": "CELTA" },
+      { "@type": "Person", "name": "Kevin Santoso", "jobTitle": "IELTS Expert", "hasCredential": "DELTA" },
+      { "@type": "Person", "name": "Dinda Aulia", "jobTitle": "Kids & Teens Specialist", "hasCredential": "TEFL" },
+      { "@type": "Person", "name": "Budi Prasetyo", "jobTitle": "Grammar Expert", "hasCredential": "CELTA" },
+      { "@type": "Person", "name": "Citra Dewi", "jobTitle": "Business English Specialist", "hasCredential": "CELTA" },
+      { "@type": "Person", "name": "Alvin Wijaya", "jobTitle": "Conversation Coach", "hasCredential": "TEFL" }
+    ]
+  }
+  </script>
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎀</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:       #BC6186;
+      --pink-light: #FAAFCC;
+      --pink-pale:  #FDF0F6;
+      --pink-mid:   #F8D5E6;
+      --rose:       #9E4D71;
+      --white:      #FFFFFF;
+      --off-white:  #FAF7F8;
+      --text:       #1C1C1E;
+      --text-2:     #3A3A3C;
+      --text-3:     #6C6C70;
+      --border:     #F0E0E8;
+      --nav-h:      72px;
+      --ease:       cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--pink-pale); }
+    ::-webkit-scrollbar-thumb { background: var(--pink-light); border-radius: 99px; }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled { border-color: var(--border); box-shadow: 0 4px 24px rgba(188,97,134,0.07); }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 600; color: var(--text);
+      text-decoration: none; letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--pink); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.875rem; color: var(--text-3); transition: color 0.2s; font-weight: 500; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a.active { color: var(--pink); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: #fff !important; padding: 10px 22px; border-radius: 99px;
+      font-weight: 600 !important; font-size: 0.85rem !important;
+      box-shadow: 0 4px 16px rgba(188,97,134,0.3);
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(188,97,134,0.4) !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s var(--ease); display: block; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; inset: 0; top: var(--nav-h); z-index: 99;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 32px; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s var(--ease);
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+      font-size: 1.5rem; font-family: 'Cormorant Garamond', serif;
+      color: var(--text); text-decoration: none; font-weight: 500;
+    }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      min-height: 82vh;
+      padding-top: var(--nav-h);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    /* Grain texture overlay */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4; z-index: 1;
+    }
+
+    /* Dark gradient hero bg */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #1C1C1E 0%, #2C1A24 50%, #1C1C1E 100%);
+    }
+    .hero-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 20% 40%, rgba(188,97,134,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 80% 70%, rgba(158,77,113,0.15) 0%, transparent 55%);
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      animation: orbFloat 10s ease-in-out infinite;
+    }
+    .orb-1 { width: 320px; height: 320px; background: rgba(188,97,134,0.12); top: -80px; right: 5%; filter: blur(60px); animation-delay: 0s; }
+    .orb-2 { width: 200px; height: 200px; background: rgba(250,175,204,0.10); bottom: 10%; left: 8%; filter: blur(40px); animation-delay: -5s; }
+    @keyframes orbFloat { 0%,100%{ transform: translateY(0) scale(1); } 50%{ transform: translateY(-30px) scale(1.05); } }
+
+    /* Grid pattern */
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      padding: 0 20px; max-width: 800px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(188,97,134,0.15);
+      border: 1px solid rgba(188,97,134,0.3);
+      color: var(--pink-light); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 99px; margin-bottom: 28px;
+      animation: fadeSlideUp 0.8s var(--ease) both;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 300; line-height: 1.1; letter-spacing: -0.03em;
+      color: #fff; margin-bottom: 22px;
+      animation: fadeSlideUp 0.8s var(--ease) 0.1s both;
+    }
+    .hero h1 em { font-style: italic; color: var(--pink-light); }
+    .hero h1 strong { font-weight: 600; }
+
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.6);
+      line-height: 1.75; max-width: 560px; margin: 0 auto 52px;
+      animation: fadeSlideUp 0.8s var(--ease) 0.2s both;
+    }
+
+    /* Tutor avatars preview strip */
+    .hero-tutors {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; margin-bottom: 16px;
+      animation: fadeSlideUp 0.8s var(--ease) 0.3s both;
+    }
+    .hero-tutor-av {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700; color: #fff;
+      border: 3px solid rgba(255,255,255,0.15);
+      margin-left: -14px; transition: transform 0.3s, z-index 0s;
+      cursor: default;
+    }
+    .hero-tutors .hero-tutor-av:first-child { margin-left: 0; }
+    .hero-tutor-av:hover { transform: translateY(-6px) scale(1.12); z-index: 10; }
+    .hero-tutor-count {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 3px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.7);
+      margin-left: -14px;
+    }
+    .hero-tutor-label {
+      color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 10px;
+      animation: fadeSlideUp 0.8s var(--ease) 0.35s both;
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.3); font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; z-index: 2;
+      animation: fadeSlideUp 1s var(--ease) 0.6s both;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    @keyframes fadeSlideUp {
+      from { opacity:0; transform: translateY(22px); }
+      to   { opacity:1; transform: none; }
+    }
+
+    /* ── LAYOUT ──────────────────────────────────── */
+    section { padding: 100px 5%; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .section-eyebrow {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--pink); margin-bottom: 16px;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.15; letter-spacing: -0.025em; color: var(--text);
+    }
+    h2 em { font-style: italic; color: var(--pink); }
+
+    /* ── REVEAL ──────────────────────────────────── */
+    .js-ready .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+    .js-ready .reveal.d1 { transition-delay: 0.08s; }
+    .js-ready .reveal.d2 { transition-delay: 0.16s; }
+    .js-ready .reveal.d3 { transition-delay: 0.24s; }
+    .js-ready .reveal.d4 { transition-delay: 0.32s; }
+    .js-ready .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── STAT STRIP ──────────────────────────────── */
+    #stats { background: var(--off-white); padding: 48px 5%; }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; background: var(--border); border-radius: 24px; overflow: hidden;
+    }
+    .stat-item {
+      background: var(--white); padding: 32px 28px; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem; font-weight: 600; color: var(--text);
+      line-height: 1; letter-spacing: -0.03em;
+    }
+    .stat-num span { color: var(--pink); font-size: 1.8rem; }
+    .stat-lbl { font-size: 0.8rem; color: var(--text-3); margin-top: 8px; line-height: 1.4; }
+
+    /* ── TUTOR CARDS ─────────────────────────────── */
+    #tutors { background: var(--white); }
+    .tutors-header { text-align: center; max-width: 560px; margin: 0 auto 72px; }
+    .tutors-header p { color: var(--text-3); line-height: 1.7; margin-top: 14px; }
+
+    .tutors-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* Tutor card */
+    .tcard {
+      border-radius: 28px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      overflow: hidden;
+      transition: transform 0.38s var(--ease), box-shadow 0.38s var(--ease), border-color 0.38s var(--ease);
+      cursor: pointer;
+      position: relative;
+    }
+    .tcard:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 64px rgba(188,97,134,0.13);
+      border-color: var(--pink-light);
+    }
+    .tcard.featured {
+      grid-column: span 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .tcard.featured:hover { border-color: var(--pink); }
+
+    /* Card top banner */
+    .tcard-top {
+      position: relative;
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .tcard.featured .tcard-top { height: 100%; min-height: 320px; }
+
+    .tcard-avatar-big {
+      width: 100px; height: 100px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; font-weight: 700; color: #fff;
+      border: 4px solid rgba(255,255,255,0.25);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      position: relative; z-index: 1;
+      transition: transform 0.4s var(--ease);
+    }
+    .tcard:hover .tcard-avatar-big { transform: scale(1.06); }
+    .tcard.featured .tcard-avatar-big { width: 130px; height: 130px; font-size: 2.8rem; }
+
+    /* Geometric shapes in card top */
+    .tcard-top-deco {
+      position: absolute; inset: 0; overflow: hidden;
+    }
+    .tcard-top-deco::before, .tcard-top-deco::after {
+      content: ''; position: absolute; border-radius: 50%;
+      opacity: 0.25;
+    }
+    .tcard-top-deco::before { width: 160px; height: 160px; bottom: -60px; right: -40px; }
+    .tcard-top-deco::after  { width: 80px;  height: 80px;  top: -30px; left: -20px; }
+
+    /* Cert badge */
+    .tcard-cert {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      color: #fff; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.25);
+      z-index: 2;
+    }
+
+    /* Specialty pill */
+    .tcard-specialty {
+      position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
+      color: rgba(255,255,255,0.9); font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 99px;
+      white-space: nowrap; z-index: 2;
+    }
+
+    /* Card body */
+    .tcard-body { padding: 28px; }
+    .tcard.featured .tcard-body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+
+    .tcard-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 500; color: var(--text);
+      letter-spacing: -0.02em; margin-bottom: 4px;
+    }
+    .tcard.featured .tcard-name { font-size: 2rem; }
+    .tcard-role { font-size: 0.8rem; color: var(--text-3); margin-bottom: 20px; }
+
+    /* Credential pills */
+    .tcard-creds { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .cred-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--pink-pale); color: var(--pink);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      padding: 5px 12px; border-radius: 99px; border: 1px solid var(--pink-mid);
+    }
+    .cred-pill::before { content: '✓'; font-size: 0.65rem; }
+
+    .tcard-bio {
+      font-size: 0.875rem; color: var(--text-3); line-height: 1.75; margin-bottom: 24px;
+    }
+
+    /* Stats row */
+    .tcard-stats { display: flex; gap: 20px; margin-bottom: 24px; }
+    .tcard-stat { text-align: center; }
+    .tcard-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--text); line-height: 1;
+    }
+    .tcard-stat-lbl { font-size: 0.68rem; color: var(--text-3); margin-top: 3px; }
+
+    /* Divider */
+    .tcard-divider { height: 1px; background: var(--border); margin: 0 0 20px; }
+
+    /* Score pills row */
+    .tcard-scores { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+    .score-pill {
+      background: var(--off-white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 8px 14px; text-align: center;
+    }
+    .score-pill-label { font-size: 0.62rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
+    .score-pill-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 600; color: var(--text); line-height: 1.2;
+    }
+
+    /* Programs taught */
+    .tcard-programs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+    .prog-tag {
+      background: var(--white); border: 1px solid var(--border);
+      color: var(--text-2); font-size: 0.72rem; font-weight: 500;
+      padding: 5px 12px; border-radius: 99px;
+      transition: all 0.2s;
+    }
+    .tcard:hover .prog-tag { border-color: var(--pink-mid); color: var(--pink); }
+
+    /* CTA button */
+    .tcard-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 13px;
+      background: var(--pink-pale); color: var(--pink);
+      border: none; border-radius: 14px;
+      font-size: 0.875rem; font-weight: 600; font-family: 'Outfit', sans-serif;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.25s var(--ease);
+    }
+    .tcard-cta:hover { background: var(--pink); color: #fff; }
+    .tcard.featured .tcard-cta { background: linear-gradient(135deg, var(--pink), var(--rose)); color: #fff; box-shadow: 0 6px 20px rgba(188,97,134,0.35); }
+    .tcard.featured .tcard-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(188,97,134,0.45); }
+
+    /* ── COLOR THEMES per tutor ──────────────────── */
+    .theme-rina   { background: linear-gradient(145deg, #BC6186 0%, #9E4D71 100%); }
+    .theme-kevin  { background: linear-gradient(145deg, #6366F1 0%, #4F46E5 100%); }
+    .theme-dinda  { background: linear-gradient(145deg, #F472B6 0%, #EC4899 100%); }
+    .theme-budi   { background: linear-gradient(145deg, #0EA5E9 0%, #0284C7 100%); }
+    .theme-citra  { background: linear-gradient(145deg, #10B981 0%, #059669 100%); }
+    .theme-alvin  { background: linear-gradient(145deg, #F59E0B 0%, #D97706 100%); }
+
+    .theme-rina  .tcard-top-deco::before, .theme-rina  .tcard-top-deco::after { background: #fff; }
+    .theme-kevin .tcard-top-deco::before, .theme-kevin .tcard-top-deco::after { background: #fff; }
+    .theme-dinda .tcard-top-deco::before, .theme-dinda .tcard-top-deco::after { background: #fff; }
+    .theme-budi  .tcard-top-deco::before, .theme-budi  .tcard-top-deco::after { background: #fff; }
+    .theme-citra .tcard-top-deco::before, .theme-citra .tcard-top-deco::after { background: #fff; }
+    .theme-alvin .tcard-top-deco::before, .theme-alvin .tcard-top-deco::after { background: #fff; }
+
+    /* ── WHY SECTION ─────────────────────────────── */
+    #why { background: var(--off-white); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .why-content h2 { margin-bottom: 20px; }
+    .why-content p { color: var(--text-3); line-height: 1.8; font-size: 1rem; margin-bottom: 40px; }
+    .why-checklist { display: flex; flex-direction: column; gap: 16px; }
+    .why-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px 20px; background: #fff;
+      border-radius: 16px; border: 1px solid var(--border);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .why-item:hover { border-color: var(--pink-light); transform: translateX(4px); }
+    .why-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--pink-pale); display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .why-item-title { font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 3px; }
+    .why-item-desc { font-size: 0.82rem; color: var(--text-3); line-height: 1.55; }
+
+    /* Why visual panel */
+    .why-visual {
+      border-radius: 28px; overflow: hidden; position: relative;
+      background: linear-gradient(145deg, #1C1C1E 0%, #2C1A24 100%);
+      padding: 48px;
+      min-height: 520px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .why-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 20% 30%, rgba(188,97,134,0.25) 0%, transparent 65%);
+    }
+    .why-visual-inner { position: relative; z-index: 1; }
+    .why-visual-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; color: #fff;
+      line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .why-visual-title em { font-style: italic; color: var(--pink-light); }
+    .why-visual-sub { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 36px; }
+
+    .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cert-badge {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 16px;
+      transition: background 0.2s;
+    }
+    .cert-badge:hover { background: rgba(255,255,255,0.12); }
+    .cert-badge-name {
+      font-weight: 700; font-size: 0.85rem; color: #fff; margin-bottom: 4px;
+    }
+    .cert-badge-desc { font-size: 0.72rem; color: rgba(255,255,255,0.45); line-height: 1.4; }
+
+    .why-visual-footer {
+      position: relative; z-index: 1;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; gap: 24px;
+    }
+    .why-visual-stat { text-align: center; }
+    .why-visual-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 600; color: #fff; line-height: 1;
+    }
+    .why-visual-stat-num span { color: var(--pink-light); }
+    .why-visual-stat-lbl { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+    /* ── BOOKING CTA ─────────────────────────────── */
+    #book { background: var(--white); }
+    .book-wrap {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 60px; align-items: center;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--rose) 100%);
+      border-radius: 36px; padding: 72px;
+      position: relative; overflow: hidden;
+    }
+    .book-wrap::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(255,255,255,0.08) 0%, transparent 55%);
+    }
+    .book-wrap::after {
+      content: ''; position: absolute;
+      width: 360px; height: 360px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      bottom: -160px; right: -80px; pointer-events: none;
+    }
+    .book-content { position: relative; z-index: 1; }
+    .book-badge {
+      display: inline-block; background: rgba(255,255,255,0.2);
+      color: #fff; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 18px; border-radius: 99px; margin-bottom: 20px;
+    }
+    .book-wrap h2 { color: #fff; margin-bottom: 14px; }
+    .book-wrap p { color: rgba(255,255,255,0.75); line-height: 1.7; max-width: 460px; }
+    .book-actions { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .btn-white {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: #fff; color: var(--rose);
+      padding: 16px 32px; border-radius: 99px;
+      font-size: 0.95rem; font-weight: 700; text-decoration: none;
+      transition: all 0.3s var(--ease);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: rgba(255,255,255,0.15); color: #fff;
+      padding: 14px 32px; border-radius: 99px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      transition: all 0.3s var(--ease); white-space: nowrap;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+
+    /* ── FAQ mini ────────────────────────────────── */
+    #faq { background: var(--off-white); }
+    .faq-header { text-align: center; max-width: 520px; margin: 0 auto 52px; }
+    .faq-header p { color: var(--text-3); line-height: 1.7; margin-top: 14px; }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .faq-item { background: #fff; border-radius: 16px; border: 1.5px solid var(--border); overflow: hidden; transition: border-color 0.3s; }
+    .faq-item.open { border-color: var(--pink-light); }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 22px; font-size: 0.92rem; font-weight: 500; color: var(--text);
+      background: none; border: none; cursor: pointer; text-align: left; font-family: 'Outfit', sans-serif;
+    }
+    .faq-q svg { width: 18px; height: 18px; color: var(--pink); flex-shrink: 0; transition: transform 0.35s var(--ease); }
+    .faq-item.open .faq-q svg { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease); }
+    .faq-a-inner { padding: 0 22px 20px; font-size: 0.875rem; color: var(--text-3); line-height: 1.75; }
+    .faq-item.open .faq-a { max-height: 220px; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer { background: var(--text); color: rgba(255,255,255,0.5); padding: 56px 5% 36px; }
+    .footer-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px; flex-wrap: wrap; gap: 20px;
+    }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.45); font-size: 0.875rem; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--pink-light); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; flex-wrap: wrap; gap: 12px; }
+
+    /* ── WA FLOAT ────────────────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 28px rgba(37,211,102,0.4);
+      transition: all 0.3s var(--ease); text-decoration: none;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg { width: 26px; height: 26px; fill: #fff; }
+    .wa-float::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid rgba(37,211,102,0.35);
+      animation: waPing 2s ease-out infinite;
+    }
+    @keyframes waPing { 0%{ transform:scale(0.9); opacity:0.8; } 100%{ transform:scale(1.6); opacity:0; } }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .tutors-grid { grid-template-columns: 1fr 1fr; }
+      .tcard.featured { grid-column: span 2; }
+      .why-grid { grid-template-columns: 1fr; gap: 48px; }
+      .why-visual { min-height: auto; }
+      .book-wrap { grid-template-columns: 1fr; gap: 36px; padding: 52px; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 72px 5%; }
+      .tutors-grid { grid-template-columns: 1fr; }
+      .tcard.featured { grid-column: span 1; display: block; }
+      .tcard.featured .tcard-top { min-height: 200px; }
+      .book-wrap { padding: 40px 28px; border-radius: 24px; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); border-radius: 16px; }
+    }
+    @media (max-width: 480px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .hero-tutors { gap: 0; }
+      .book-actions { width: 100%; }
+      .btn-white, .btn-ghost { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">Elevaree<span>.Academy</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">Tentang Kami</a></li>
+      <li><a href="index.html#programs">Program</a></li>
+      <li><a href="index.html#whv">English for WHV</a></li>
+      <li><a href="index.html#schedule">Jadwal</a></li>
+      <li><a href="tutor.html" class="active">Tutor</a></li>
+      <li><a href="testimoni.html">Testimoni</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#register" class="nav-cta">Daftar Sekarang</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="closeMobile()">Beranda</a>
+    <a href="index.html#programs" onclick="closeMobile()">Program</a>
+    <a href="index.html#whv" onclick="closeMobile()">English for WHV</a>
+    <a href="tutor.html" onclick="closeMobile()" style="color:var(--pink)">Tutor</a>
+    <a href="testimoni.html" onclick="closeMobile()">Testimoni</a>
+    <a href="index.html#register" onclick="closeMobile()" style="color:var(--pink);font-weight:700">Daftar Sekarang</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow">✦ Tim Pengajar Elevaree</div>
+      <h1>Belajar dari yang<br><em>Terbaik</em> di<br><strong>Bidangnya</strong></h1>
+      <p class="hero-sub">
+        Setiap tutor kami bersertifikat internasional, berpengalaman, dan punya satu misi: membuat kamu berbicara Bahasa Inggris dengan percaya diri.
+      </p>
+
+      <div class="hero-tutors">
+        <div class="hero-tutor-av theme-rina" title="Ms. Rina Hartati">RH</div>
+        <div class="hero-tutor-av theme-kevin" title="Mr. Kevin Santoso">KS</div>
+        <div class="hero-tutor-av theme-dinda" title="Ms. Dinda Aulia">DA</div>
+        <div class="hero-tutor-av theme-budi" title="Mr. Budi Prasetyo">BP</div>
+        <div class="hero-tutor-av theme-citra" title="Ms. Citra Dewi">CD</div>
+        <div class="hero-tutor-av theme-alvin" title="Mr. Alvin Wijaya">AW</div>
+      </div>
+      <div class="hero-tutor-label">6 tutor bersertifikat internasional</div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STAT STRIP -->
+  <div id="stats">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-lbl">Tutor Bersertifikat<br>Internasional</div>
+      </div>
+      <div class="stat-item reveal d1">
+        <div class="stat-num">9.0</div>
+        <div class="stat-lbl">IELTS Score<br>Tertinggi Tutor</div>
+      </div>
+      <div class="stat-item reveal d2">
+        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-lbl">Siswa yang<br>Berhasil</div>
+      </div>
+      <div class="stat-item reveal d3">
+        <div class="stat-num">4.9<span>★</span></div>
+        <div class="stat-lbl">Rating Rata-rata<br>Tutor</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUTOR CARDS -->
+  <section id="tutors">
+    <div class="container">
+      <div class="tutors-header reveal">
+        <div class="section-eyebrow">Meet the Team</div>
+        <h2>Para Ahli di<br><em>Balik Kelasmu</em></h2>
+        <p>Semua tutor Elevaree sudah melalui seleksi ketat — hanya yang terbaik yang mengajar di sini.</p>
+      </div>
+
+      <div class="tutors-grid">
+
+        <!-- Ms. Rina — Featured (Terlaris) -->
+        <div class="tcard featured reveal">
+          <div class="tcard-top theme-rina">
+            <div class="tcard-top-deco"></div>
+            <div class="tcard-avatar-big">RH</div>
+            <div class="tcard-cert">CELTA Certified</div>
+            <div class="tcard-specialty">⭐ Tutor Terfavorit</div>
+          </div>
+          <div class="tcard-body">
+            <div class="tcard-name">Ms. Rina Hartati</div>
+            <div class="tcard-role">Speaking &amp; Pronunciation Specialist</div>
+            <div class="tcard-creds">
+              <span class="cred-pill">CELTA</span>
+              <span class="cred-pill">IELTS 8.5</span>
+              <span class="cred-pill">7 Thn Pengalaman</span>
+            </div>
+            <p class="tcard-bio">
+              Lulusan Linguistik Universitas Indonesia dengan spesialisasi fonetik. Ms. Rina dikenal karena kemampuannya membuat siswa "berani bicara" dari sesi pertama. Pendekatannya yang hangat dan sabar menjadikannya favorit di semua level.
+            </p>
+            <div class="tcard-scores">
+              <div class="score-pill">
+                <div class="score-pill-label">IELTS Score</div>
+                <div class="score-pill-val">8.5</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Siswa Diajar</div>
+                <div class="score-pill-val">180+</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Rating</div>
+                <div class="score-pill-val">5.0 ★</div>
+              </div>
+            </div>
+            <div class="tcard-programs">
+              <span class="prog-tag">English Starter</span>
+              <span class="prog-tag">English Pro</span>
+              <span class="prog-tag">Pronunciation</span>
+            </div>
+            <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20belajar%20dengan%20Ms.%20Rina%20Hartati" target="_blank" rel="noopener noreferrer" class="tcard-cta">
+              Pilih Ms. Rina →
+            </a>
+          </div>
+        </div>
+
+        <!-- Mr. Kevin -->
+        <div class="tcard reveal d1">
+          <div class="tcard-top theme-kevin">
+            <div class="tcard-top-deco"></div>
+            <div class="tcard-avatar-big">KS</div>
+            <div class="tcard-cert">DELTA Certified</div>
+            <div class="tcard-specialty">🎯 IELTS Expert</div>
+          </div>
+          <div class="tcard-body">
+            <div class="tcard-name">Mr. Kevin Santoso</div>
+            <div class="tcard-role">IELTS &amp; Academic English Expert</div>
+            <div class="tcard-creds">
+              <span class="cred-pill">DELTA</span>
+              <span class="cred-pill">IELTS 9.0</span>
+            </div>
+            <p class="tcard-bio">
+              Satu-satunya tutor di Elevaree dengan DELTA (level tertinggi sertifikasi ELT) dan IELTS sempurna 9.0. Spesialis persiapan ujian dan academic writing yang hasilnya terbukti.
+            </p>
+            <div class="tcard-scores">
+              <div class="score-pill">
+                <div class="score-pill-label">IELTS Score</div>
+                <div class="score-pill-val">9.0</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Siswa Lulus</div>
+                <div class="score-pill-val">95+</div>
+              </div>
+            </div>
+            <div class="tcard-programs">
+              <span class="prog-tag">English Elite</span>
+              <span class="prog-tag">IELTS Prep</span>
+            </div>
+            <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20belajar%20dengan%20Mr.%20Kevin%20Santoso" target="_blank" rel="noopener noreferrer" class="tcard-cta">
+              Pilih Mr. Kevin →
+            </a>
+          </div>
+        </div>
+
+        <!-- Ms. Dinda -->
+        <div class="tcard reveal d2">
+          <div class="tcard-top theme-dinda">
+            <div class="tcard-top-deco"></div>
+            <div class="tcard-avatar-big">DA</div>
+            <div class="tcard-cert">TEFL Certified</div>
+            <div class="tcard-specialty">🌸 Kids & Teens Specialist</div>
+          </div>
+          <div class="tcard-body">
+            <div class="tcard-name">Ms. Dinda Aulia</div>
+            <div class="tcard-role">Young Learners &amp; Teens Specialist</div>
+            <div class="tcard-creds">
+              <span class="cred-pill">TEFL</span>
+              <span class="cred-pill">Young Learners</span>
+            </div>
+            <p class="tcard-bio">
+              Dengan latar belakang psikologi pendidikan, Ms. Dinda tahu persis cara belajar yang menyenangkan untuk anak-anak. Kelasnya penuh games, songs, dan aktivitas yang membuat anak jatuh cinta bahasa Inggris.
+            </p>
+            <div class="tcard-scores">
+              <div class="score-pill">
+                <div class="score-pill-label">IELTS Score</div>
+                <div class="score-pill-val">7.5</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Anak Diajar</div>
+                <div class="score-pill-val">120+</div>
+              </div>
+            </div>
+            <div class="tcard-programs">
+              <span class="prog-tag">English for Kids</span>
+              <span class="prog-tag">English for Teens</span>
+            </div>
+            <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20belajar%20dengan%20Ms.%20Dinda%20Aulia" target="_blank" rel="noopener noreferrer" class="tcard-cta">
+              Pilih Ms. Dinda →
+            </a>
+          </div>
+        </div>
+
+        <!-- Mr. Budi -->
+        <div class="tcard reveal">
+          <div class="tcard-top theme-budi">
+            <div class="tcard-top-deco"></div>
+            <div class="tcard-avatar-big">BP</div>
+            <div class="tcard-cert">CELTA Certified</div>
+            <div class="tcard-specialty">📝 Grammar Expert</div>
+          </div>
+          <div class="tcard-body">
+            <div class="tcard-name">Mr. Budi Prasetyo</div>
+            <div class="tcard-role">Grammar &amp; Writing Specialist</div>
+            <div class="tcard-creds">
+              <span class="cred-pill">CELTA</span>
+              <span class="cred-pill">IELTS 8.0</span>
+            </div>
+            <p class="tcard-bio">
+              Jika grammar selalu jadi musuhmu, Mr. Budi adalah jawabannya. Penjelasannya sistematis, logis, dan mudah dipahami bahkan untuk aturan paling rumit sekalipun.
+            </p>
+            <div class="tcard-scores">
+              <div class="score-pill">
+                <div class="score-pill-label">IELTS Score</div>
+                <div class="score-pill-val">8.0</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Siswa Diajar</div>
+                <div class="score-pill-val">110+</div>
+              </div>
+            </div>
+            <div class="tcard-programs">
+              <span class="prog-tag">English Starter</span>
+              <span class="prog-tag">English Pro</span>
+              <span class="prog-tag">Writing</span>
+            </div>
+            <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20belajar%20dengan%20Mr.%20Budi%20Prasetyo" target="_blank" rel="noopener noreferrer" class="tcard-cta">
+              Pilih Mr. Budi →
+            </a>
+          </div>
+        </div>
+
+        <!-- Ms. Citra -->
+        <div class="tcard reveal d1">
+          <div class="tcard-top theme-citra">
+            <div class="tcard-top-deco"></div>
+            <div class="tcard-avatar-big">CD</div>
+            <div class="tcard-cert">CELTA Certified</div>
+            <div class="tcard-specialty">💼 Business English</div>
+          </div>
+          <div class="tcard-body">
+            <div class="tcard-name">Ms. Citra Dewi</div>
+            <div class="tcard-role">Business English &amp; Corporate Trainer</div>
+            <div class="tcard-creds">
+              <span class="cred-pill">CELTA</span>
+              <span class="cred-pill">TOEIC 990</span>
+            </div>
+            <p class="tcard-bio">
+              Eks-profesional di multinational company selama 8 tahun sebelum menjadi tutor. Ms. Citra mengajarkan English yang dipakai di dunia kerja nyata — bukan hanya teori.
+            </p>
+            <div class="tcard-scores">
+              <div class="score-pill">
+                <div class="score-pill-label">TOEIC Score</div>
+                <div class="score-pill-val">990</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Perusahaan</div>
+                <div class="score-pill-val">25+</div>
+              </div>
+            </div>
+            <div class="tcard-programs">
+              <span class="prog-tag">Business English</span>
+              <span class="prog-tag">Corporate Training</span>
+            </div>
+            <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20belajar%20dengan%20Ms.%20Citra%20Dewi" target="_blank" rel="noopener noreferrer" class="tcard-cta">
+              Pilih Ms. Citra →
+            </a>
+          </div>
+        </div>
+
+        <!-- Mr. Alvin -->
+        <div class="tcard reveal d2">
+          <div class="tcard-top theme-alvin">
+            <div class="tcard-top-deco"></div>
+            <div class="tcard-avatar-big">AW</div>
+            <div class="tcard-cert">TEFL Certified</div>
+            <div class="tcard-specialty">💬 Conversation Coach</div>
+          </div>
+          <div class="tcard-body">
+            <div class="tcard-name">Mr. Alvin Wijaya</div>
+            <div class="tcard-role">Conversation &amp; Fluency Coach</div>
+            <div class="tcard-creds">
+              <span class="cred-pill">TEFL</span>
+              <span class="cred-pill">IELTS 7.5</span>
+            </div>
+            <p class="tcard-bio">
+              Spesialis fluency dan natural conversation. Mr. Alvin pernah tinggal di Australia 3 tahun sehingga memahami betul cara native speaker berkomunikasi sehari-hari.
+            </p>
+            <div class="tcard-scores">
+              <div class="score-pill">
+                <div class="score-pill-label">IELTS Score</div>
+                <div class="score-pill-val">7.5</div>
+              </div>
+              <div class="score-pill">
+                <div class="score-pill-label">Siswa Diajar</div>
+                <div class="score-pill-val">85+</div>
+              </div>
+            </div>
+            <div class="tcard-programs">
+              <span class="prog-tag">English Pro</span>
+              <span class="prog-tag">Conversation</span>
+              <span class="prog-tag">Fluency</span>
+            </div>
+            <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20belajar%20dengan%20Mr.%20Alvin%20Wijaya" target="_blank" rel="noopener noreferrer" class="tcard-cta">
+              Pilih Mr. Alvin →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY OUR TUTORS -->
+  <section id="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-content reveal">
+          <div class="section-eyebrow">Standar Kami</div>
+          <h2>Kenapa Tutor Kami<br><em>Berbeda?</em></h2>
+          <p>Kami tidak sekadar mencari yang bisa berbahasa Inggris. Setiap tutor Elevaree melewati 4 tahap seleksi ketat sebelum mengajar.</p>
+          <div class="why-checklist">
+            <div class="why-item">
+              <div class="why-icon">🎓</div>
+              <div>
+                <div class="why-item-title">Sertifikasi Internasional Wajib</div>
+                <div class="why-item-desc">Semua tutor harus punya minimal satu dari: CELTA, DELTA, atau TEFL terakreditasi. Bukan sekadar klaim.</div>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-icon">🧪</div>
+              <div>
+                <div class="why-item-title">Demo Mengajar Sebelum Diterima</div>
+                <div class="why-item-desc">Setiap calon tutor wajib mengajar di depan tim kami. Penjelasan yang bagus di atas kertas tidak cukup.</div>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-icon">📈</div>
+              <div>
+                <div class="why-item-title">Evaluasi Berkala dari Siswa</div>
+                <div class="why-item-desc">Rating tutor dimonitor setiap bulan. Di bawah standar? Ada coaching internal atau peningkatan wajib.</div>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-icon">🔄</div>
+              <div>
+                <div class="why-item-title">Pelatihan Metode Terbaru</div>
+                <div class="why-item-desc">Tutor kami rutin ikut workshop dan update kurikulum agar selalu mengajar dengan pendekatan paling efektif.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-visual reveal d2">
+          <div class="why-visual-inner">
+            <div class="why-visual-title">Sertifikasi yang<br>Kami <em>Akui</em></div>
+            <div class="why-visual-sub">Standar pengajaran internasional yang diakui Cambridge & British Council</div>
+            <div class="cert-grid">
+              <div class="cert-badge">
+                <div class="cert-badge-name">CELTA</div>
+                <div class="cert-badge-desc">Certificate in English Language Teaching to Adults — Cambridge University Press</div>
+              </div>
+              <div class="cert-badge">
+                <div class="cert-badge-name">DELTA</div>
+                <div class="cert-badge-desc">Diploma in English Language Teaching to Adults — Level tertinggi ELT</div>
+              </div>
+              <div class="cert-badge">
+                <div class="cert-badge-name">TEFL</div>
+                <div class="cert-badge-desc">Teaching English as a Foreign Language — Standar internasional global</div>
+              </div>
+              <div class="cert-badge">
+                <div class="cert-badge-name">IELTS 7.0+</div>
+                <div class="cert-badge-desc">Semua tutor wajib membuktikan profisiensi minimum Band 7 dari IELTS</div>
+              </div>
+            </div>
+          </div>
+          <div class="why-visual-footer">
+            <div class="why-visual-stat">
+              <div class="why-visual-stat-num">100<span>%</span></div>
+              <div class="why-visual-stat-lbl">Tutor Bersertifikat</div>
+            </div>
+            <div class="why-visual-stat">
+              <div class="why-visual-stat-num">4<span>×</span></div>
+              <div class="why-visual-stat-lbl">Tahap Seleksi</div>
+            </div>
+            <div class="why-visual-stat">
+              <div class="why-visual-stat-num">4.9<span>★</span></div>
+              <div class="why-visual-stat-lbl">Rating Rata-rata</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING CTA -->
+  <section id="book">
+    <div class="container">
+      <div class="book-wrap reveal">
+        <div class="book-content">
+          <div class="book-badge">✦ Mulai Sekarang</div>
+          <h2>Pilih Tutormu &amp;<br><em>Mulai Belajar</em> Hari Ini</h2>
+          <p style="margin-top:14px">Trial class gratis tersedia untuk semua tutor — kenali gaya mengajar mereka sebelum berkomitmen. Konsultasi placement test juga gratis!</p>
+        </div>
+        <div class="book-actions">
+          <a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20konsultasi%20memilih%20tutor%20yang%20tepat%20untuk%20saya" target="_blank" rel="noopener noreferrer" class="btn-white">
+            Konsultasi Pilih Tutor
+          </a>
+          <a href="index.html#register" class="btn-ghost">
+            Daftar Trial Gratis →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ TUTOR -->
+  <section id="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <div class="section-eyebrow">FAQ</div>
+        <h2>Pertanyaan Soal<br><em>Tutor Kami</em></h2>
+        <p>Pertanyaan yang sering ditanyakan seputar tim pengajar Elevaree.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Apakah saya bisa memilih tutor sendiri?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Ya! Kamu bebas memilih tutor sesuai preferensi. Kami juga menyediakan konsultasi gratis untuk membantu memilih tutor yang paling cocok dengan tujuan dan gaya belajarmu.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Bagaimana jika saya tidak cocok dengan tutor yang dipilih?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Tidak masalah! Kamu bisa request pergantian tutor kapan saja tanpa biaya tambahan. Kepuasan belajarmu adalah prioritas utama kami.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Apakah bisa request jadwal khusus dengan tutor tertentu?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Bisa, tergantung ketersediaan tutor. Hubungi kami via WhatsApp untuk mengecek jadwal kosong tutor pilihanmu dan kami akan usahakan menyesuaikannya.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Apakah ada sesi 1-on-1 dengan tutor?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Sesi 1-on-1 tersedia untuk program English Elite dan Business English. Untuk program lain, kelas dibatasi maksimal 8 siswa agar tetap personal dan intensif.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Bagaimana cara menghubungi tutor di luar jam kelas?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Semua siswa akan dimasukkan ke WhatsApp study group bersama tutornya. Kamu bisa bertanya kapan saja di sana, dan tutor akan menjawab di luar jam mengajar mereka.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <a href="index.html" class="nav-logo" style="color:#fff">Elevaree<span>.Academy</span></a>
+      <div class="footer-links">
+        <a href="index.html#about">Tentang Kami</a>
+        <a href="index.html#programs">Program</a>
+        <a href="index.html#whv">English for WHV</a>
+        <a href="index.html#schedule">Jadwal</a>
+        <a href="tutor.html">Tutor</a>
+        <a href="testimoni.html">Testimoni</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#register">Daftar</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="yr"></span> Elevaree.Academy. All rights reserved.</span>
+      <span>Made with ❤️ for English learners</span>
+    </div>
+  </footer>
+
+  <!-- WA Float -->
+  <a href="https://wa.me/6282261301538?text=Halo%20Elevaree%20Academy!%20Saya%20ingin%20konsultasi%20pilih%20tutor" class="wa-float" target="_blank" rel="noopener noreferrer" title="Chat WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      const open = mobileMenu.classList.contains('open');
+      hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    function closeMobile() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.01, rootMargin: '0px 0px 0px 0px' });
+    reveals.forEach(el => obs.observe(el));
+    setTimeout(() => reveals.forEach(el => el.classList.add('visible')), 200);
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>
