@@ -536,7 +536,7 @@ function renderProgram(program) {
             </div>
           </div>
 
-          <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>
+          <button class="submit-btn" id="submitBtn" type="button" onclick="submitForm()" disabled>
             Isi Formulir Yuk! ✨
           </button>
 
@@ -652,22 +652,16 @@ function renderProgram(program) {
       const subtotal = BASE_PRICE * count;
       const discAmt = Math.round(subtotal * discountPct / 100);
       const total = subtotal - discAmt;
-      const msg = [
-        'Halo Elevaree Academy! 👋',
-        '',
-        \`Saya ingin mendaftar program *\${PROGRAM_NAME}*.\`,
-        '',
-        '🗓️ *Jadwal Dipilih:*',
-        schName,
-        \`\${schDate} · \${schMode}\`,
-        '',
-        \`👥 Jumlah Peserta : \${count} orang\`,
-        promoCode && discountPct > 0 ? \`🏷️ Kode Promo     : \${promoCode} (diskon \${discountPct}%)\` : null,
-        \`💰 Total          : Rp\${total.toLocaleString('id-ID')}\${PRICE_UNIT}\`,
-        '',
-        'Mohon info langkah selanjutnya. Terima kasih! 🙏'
-      ].filter(l => l !== null).join('\\n');
-      window.open(\`https://wa.me/\${WA_NUMBER}?text=\${encodeURIComponent(msg)}\`, '_blank');
+      const params = new URLSearchParams({
+        program: PROGRAM_NAME,
+        schedule: schName,
+        date: schDate,
+        mode: schMode,
+        count: String(count),
+        promo: promoCode && discountPct > 0 ? \`\${promoCode} (\${discountPct}% off)\` : '-',
+        total: \`Rp\${total.toLocaleString('id-ID')}\${PRICE_UNIT}\`
+      });
+      window.location.href = \`formulir-pendaftaran.html?\${params.toString()}\`;
     }
 
     function toggleFaq(btn) {

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulir Pendaftaran — Elevaree.Academy</title>
+  <meta name="description" content="Lengkapi formulir pendaftaran Elevaree.Academy dan upload bukti pembayaran untuk konfirmasi admin." />
+  <link rel="canonical" href="https://elevaree.academy/formulir-pendaftaran.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎀</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --pink: #BC6186;
+      --pink-light: #FAAFCC;
+      --pink-pale: #FDF0F6;
+      --pink-mid: #F8D5E6;
+      --rose: #9E4D71;
+      --off-white: #FAF8F9;
+      --text: #1C1C1E;
+      --text-2: #3A3A3C;
+      --text-3: #6C6C70;
+      --border: #F0E0E8;
+      --success: #059669;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      min-height: 100vh;
+      font-family: 'Outfit', sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .soft-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .soft-bg::before,
+    .soft-bg::after {
+      content: '';
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      background: rgba(250, 175, 204, .24);
+      filter: blur(16px);
+      animation: floaty 12s var(--ease) infinite alternate;
+    }
+    .soft-bg::before { top: -180px; right: -120px; }
+    .soft-bg::after { bottom: -220px; left: -140px; animation-delay: -4s; }
+
+    nav {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--pink); }
+    .back-link {
+      color: var(--text-3);
+      font-size: .85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--pink); }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 42px 5% 80px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .intro,
+    .form-card,
+    .summary-card {
+      animation: rise .75s var(--ease) both;
+    }
+    .intro { animation-delay: .03s; }
+    .form-card { animation-delay: .12s; }
+    .summary-card { animation-delay: .2s; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 99px;
+      background: var(--pink-mid);
+      color: var(--rose);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.35rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .intro p {
+      max-width: 650px;
+      color: var(--text-3);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .form-card,
+    .summary-card {
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 18px 50px rgba(188,97,134,.1);
+      overflow: hidden;
+    }
+    .form-head,
+    .summary-head {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-head h2,
+    .summary-head h2 {
+      font-size: 1.06rem;
+      line-height: 1.3;
+    }
+    .form-head p,
+    .summary-head p {
+      margin-top: 5px;
+      color: var(--text-3);
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+
+    form {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    label {
+      color: var(--text-2);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    input {
+      width: 100%;
+      min-height: 48px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      background: white;
+      padding: 13px 15px;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    input:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px rgba(188,97,134,.08);
+      transform: translateY(-1px);
+    }
+    input::placeholder { color: #9A9AA0; }
+
+    .rekening {
+      grid-column: 1 / -1;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff, var(--pink-pale));
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+    .rekening small {
+      display: block;
+      color: var(--text-3);
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .rekening strong {
+      display: block;
+      font-size: 1.15rem;
+      letter-spacing: .3px;
+      margin-bottom: 3px;
+    }
+    .rekening span {
+      display: block;
+      color: var(--text-3);
+      font-size: .83rem;
+    }
+    .copy-btn {
+      border: none;
+      border-radius: 12px;
+      background: var(--pink);
+      color: white;
+      padding: 12px 15px;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: var(--rose); transform: translateY(-1px); }
+
+    .upload-box {
+      position: relative;
+      border: 1.5px dashed var(--pink-light);
+      border-radius: 18px;
+      background: rgba(253,240,246,.68);
+      padding: 20px;
+      min-height: 132px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .upload-box:hover {
+      border-color: var(--pink);
+      background: #fff;
+      transform: translateY(-1px);
+    }
+    .upload-box input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon {
+      width: 42px;
+      height: 42px;
+      margin: 0 auto 10px;
+      border-radius: 14px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--pink);
+      font-size: 1.3rem;
+      box-shadow: 0 8px 24px rgba(188,97,134,.12);
+    }
+    .upload-title {
+      color: var(--text);
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .upload-hint {
+      color: var(--text-3);
+      font-size: .8rem;
+      line-height: 1.5;
+    }
+    .file-name {
+      margin-top: 8px;
+      color: var(--success);
+      font-size: .82rem;
+      font-weight: 700;
+      min-height: 18px;
+    }
+
+    .submit-row {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 2px;
+    }
+    .submit-btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--pink), var(--rose));
+      color: white;
+      min-height: 54px;
+      font: inherit;
+      font-size: .95rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 34px rgba(188,97,134,.28);
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 42px rgba(188,97,134,.34); }
+    .note {
+      color: var(--text-3);
+      font-size: .76rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .summary-card {
+      position: sticky;
+      top: 88px;
+    }
+    .summary-body {
+      padding: 20px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--text-3);
+      font-size: .84rem;
+      line-height: 1.45;
+    }
+    .summary-row span:first-child { flex-shrink: 0; }
+    .summary-row strong {
+      color: var(--text);
+      font-weight: 700;
+      text-align: right;
+    }
+    .summary-total {
+      margin-top: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 1rem;
+    }
+    .summary-total strong {
+      color: var(--pink);
+      font-size: 1.1rem;
+    }
+    .mini-steps {
+      margin-top: 10px;
+      border-radius: 16px;
+      background: var(--pink-pale);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .mini-step {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: var(--text-2);
+      font-size: .78rem;
+      line-height: 1.45;
+    }
+    .mini-step b {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      color: var(--pink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .72rem;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--text);
+      color: white;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: .82rem;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      z-index: 20;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .success-panel {
+      grid-column: 1 / -1;
+      display: none;
+      border: 1px solid rgba(5,150,105,.22);
+      border-radius: 18px;
+      background: #ECFDF5;
+      padding: 18px;
+      animation: rise .45s var(--ease) both;
+    }
+    .success-panel.show { display: block; }
+    .success-panel strong {
+      display: block;
+      color: var(--success);
+      font-size: .98rem;
+      margin-bottom: 5px;
+    }
+    .success-panel span {
+      display: block;
+      color: #047857;
+      font-size: .84rem;
+      line-height: 1.6;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floaty {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(28px,22px,0) scale(1.04); }
+    }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; padding-top: 28px; }
+      .summary-card { position: static; order: -1; }
+      form { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      nav { padding: 0 4%; }
+      main { padding: 24px 4% 56px; gap: 22px; }
+      .form-head, .summary-head, form, .summary-body { padding-left: 18px; padding-right: 18px; }
+      .rekening { grid-template-columns: 1fr; }
+      .copy-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="soft-bg"></div>
+  <nav>
+    <a href="index.html" class="nav-logo">Elevaree<span>.Academy</span></a>
+    <a href="index.html#programs" class="back-link">Kembali ke Program</a>
+  </nav>
+
+  <main>
+    <section>
+      <div class="intro">
+        <div class="eyebrow">Konfirmasi Pendaftaran</div>
+        <h1>Lengkapi Data<br>Pendaftaranmu</h1>
+        <p>Isi data peserta, lakukan pembayaran ke rekening yang tersedia, lalu upload bukti pendaftaran. Setelah dikirim, tim Elevaree akan meninjau data pendaftaranmu.</p>
+      </div>
+
+      <div class="form-card" style="margin-top:28px;">
+        <div class="form-head">
+          <h2>Data Peserta</h2>
+          <p>Pastikan nomor HP aktif dan bisa dihubungi oleh admin.</p>
+        </div>
+        <form id="registrationForm">
+          <div class="field">
+            <label for="name">Nama</label>
+            <input id="name" name="name" type="text" placeholder="Nama lengkap" required />
+          </div>
+          <div class="field">
+            <label for="age">Umur</label>
+            <input id="age" name="age" type="number" min="3" max="80" placeholder="Contoh: 17" required />
+          </div>
+          <div class="field">
+            <label for="city">Asal Kota</label>
+            <input id="city" name="city" type="text" placeholder="Contoh: Jakarta" required />
+          </div>
+          <div class="field">
+            <label for="phone">Nomor HP</label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="Contoh: 08123456789" required />
+          </div>
+
+          <div class="rekening">
+            <div>
+              <small>Nomor Rekening</small>
+              <strong id="rekeningNumber">BCA 1234567890</strong>
+              <span>a.n. Elevaree Academy</span>
+            </div>
+            <button class="copy-btn" type="button" onclick="copyRekening()">Salin Rekening</button>
+          </div>
+
+          <div class="field full">
+            <label for="proof">Upload Bukti Pendaftaran</label>
+            <label class="upload-box" for="proof">
+              <input id="proof" name="proof" type="file" accept="image/*,.pdf" required />
+              <span>
+                <span class="upload-icon">↑</span>
+                <span class="upload-title">Pilih file bukti transfer</span>
+                <span class="upload-hint">Format JPG, PNG, atau PDF. Nama file akan muncul setelah dipilih.</span>
+                <span class="file-name" id="fileName"></span>
+              </span>
+            </label>
+          </div>
+
+          <div class="submit-row">
+            <button class="submit-btn" type="submit">Kirim Formulir</button>
+            <p class="note">Catatan: saat ini website masih statis, jadi data ditampilkan sebagai konfirmasi di browser. Untuk menyimpan upload bukti secara permanen, halaman ini perlu disambungkan ke backend atau layanan form.</p>
+          </div>
+
+          <div class="success-panel" id="successPanel">
+            <strong>Formulir berhasil disiapkan.</strong>
+            <span>Data pendaftaran sudah tervalidasi di halaman ini. Langkah berikutnya adalah menyambungkan formulir ke penyimpanan agar bukti transfer benar-benar terkirim ke admin.</span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <aside class="summary-card">
+      <div class="summary-head">
+        <h2>Ringkasan Pilihan</h2>
+        <p>Data dari halaman program sebelumnya.</p>
+      </div>
+      <div class="summary-body">
+        <div class="summary-row"><span>Program</span><strong id="sumProgram">-</strong></div>
+        <div class="summary-row"><span>Jadwal</span><strong id="sumSchedule">-</strong></div>
+        <div class="summary-row"><span>Periode</span><strong id="sumDate">-</strong></div>
+        <div class="summary-row"><span>Mode</span><strong id="sumMode">Online</strong></div>
+        <div class="summary-row"><span>Peserta</span><strong id="sumCount">1 orang</strong></div>
+        <div class="summary-row"><span>Promo</span><strong id="sumPromo">-</strong></div>
+        <div class="summary-row summary-total"><span>Total</span><strong id="sumTotal">-</strong></div>
+
+        <div class="mini-steps">
+          <div class="mini-step"><b>1</b><span>Transfer sesuai total ke rekening Elevaree.</span></div>
+          <div class="mini-step"><b>2</b><span>Upload bukti pendaftaran pada formulir ini.</span></div>
+          <div class="mini-step"><b>3</b><span>Kirim formulir dan tunggu konfirmasi admin.</span></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast">Nomor rekening disalin</div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const state = {
+      program: params.get('program') || 'Program Elevaree',
+      schedule: params.get('schedule') || '-',
+      date: params.get('date') || '-',
+      mode: params.get('mode') || 'Online',
+      count: params.get('count') || '1',
+      total: params.get('total') || '-',
+      promo: params.get('promo') || '-'
+    };
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    setText('sumProgram', state.program);
+    setText('sumSchedule', state.schedule);
+    setText('sumDate', state.date);
+    setText('sumMode', state.mode);
+    setText('sumCount', `${state.count} orang`);
+    setText('sumPromo', state.promo);
+    setText('sumTotal', state.total);
+
+    const proof = document.getElementById('proof');
+    const fileName = document.getElementById('fileName');
+    proof.addEventListener('change', () => {
+      fileName.textContent = proof.files.length ? `✓ ${proof.files[0].name}` : '';
+    });
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    async function copyRekening() {
+      const value = document.getElementById('rekeningNumber').textContent.replace('BCA ', '').trim();
+      try {
+        await navigator.clipboard.writeText(value);
+        showToast('Nomor rekening disalin');
+      } catch {
+        showToast('Salin manual: ' + value);
+      }
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const proofFile = proof.files[0];
+      const submission = {
+        name: data.get('name'),
+        age: data.get('age'),
+        city: data.get('city'),
+        phone: data.get('phone'),
+        proofFile: proofFile ? proofFile.name : '',
+        program: state.program,
+        schedule: state.schedule,
+        date: state.date,
+        mode: state.mode,
+        count: state.count,
+        promo: state.promo,
+        total: state.total,
+        submittedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('elevaree-last-registration', JSON.stringify(submission));
+      document.getElementById('successPanel').classList.add('show');
+      showToast('Formulir berhasil dikirim');
+      event.currentTarget.reset();
+      fileName.textContent = '';
+    });
+  </script>
+</body>
+</html>

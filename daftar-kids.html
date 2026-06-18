@@ -531,7 +531,7 @@
           </div>
 
           <!-- Submit -->
-          <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>
+          <button class="submit-btn" id="submitBtn" type="button" onclick="submitForm()" disabled>
             Isi Formulir Yuk! ✨
           </button>
 
@@ -564,6 +564,8 @@
 
   <script>
     // ── STATE ──
+    const PROGRAM_NAME = 'English for Kids';
+    const PRICE_UNIT = '/2 minggu';
     const BASE_PRICE = 150000;
     const PROMOS = { 'KIDS20': 20, 'ELEVAREE10': 10, 'COBA15': 15 };
     let count = 1;
@@ -646,7 +648,7 @@
       document.getElementById('submitBtn').disabled = !selectedScheduleId;
     }
 
-    // ── SUBMIT → WHATSAPP ──
+    // ── SUBMIT → FORM PAGE ──
     function submitForm() {
       const promoCode = document.getElementById('promoInput').value.trim().toUpperCase();
       const selOpt  = document.querySelector(`#formSchedulePicker .picker-option[data-id="${selectedScheduleId}"]`);
@@ -656,24 +658,17 @@
       const subtotal = BASE_PRICE * count;
       const discAmt  = Math.round(subtotal * discountPct / 100);
       const total    = subtotal - discAmt;
+      const params = new URLSearchParams({
+        program: PROGRAM_NAME,
+        schedule: schName,
+        date: schDate,
+        mode: schMode,
+        count: String(count),
+        promo: promoCode && discountPct > 0 ? `${promoCode} (${discountPct}% off)` : '-',
+        total: `Rp${total.toLocaleString('id-ID')}${PRICE_UNIT}`
+      });
 
-      const msg = [
-        `Halo Elevaree Academy! 👋`,
-        ``,
-        `Saya ingin mendaftarkan anak saya ke program *English for Kids*.`,
-        ``,
-        `🗓️ *Jadwal Dipilih:*`,
-        `${schName}`,
-        `${schDate} · ${schMode}`,
-        ``,
-        `👥 Jumlah Peserta : ${count} orang`,
-        promoCode && discountPct > 0 ? `🏷️ Kode Promo     : ${promoCode} (diskon ${discountPct}%)` : null,
-        `💰 Total          : Rp${total.toLocaleString('id-ID')}/2 minggu`,
-        ``,
-        `Mohon info langkah selanjutnya. Terima kasih! 🙏`
-      ].filter(l => l !== null).join('\n');
-
-      window.open(`https://wa.me/6282261301538?text=${encodeURIComponent(msg)}`, '_blank');
+      window.location.href = `formulir-pendaftaran.html?${params.toString()}`;
     }
 
     // ── FAQ ──
