@@ -86,7 +86,7 @@
       --ease:       cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
     body {
       font-family: 'Outfit', sans-serif;
@@ -735,7 +735,7 @@
     #testimonials { background: var(--white); overflow: hidden; }
     .testi-header { text-align: center; max-width: 540px; margin: 0 auto 64px; }
     .testi-header p { color: var(--text-3); margin-top: 14px; line-height: 1.7; }
-    .testi-track-wrap { overflow: hidden; -webkit-mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent); mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent); }
+    .testi-track-wrap { overflow: hidden; max-width: 100%; contain: paint; -webkit-mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent); mask: linear-gradient(90deg, transparent, black 10%, black 90%, transparent); }
     .testi-track {
       display: flex; gap: 24px;
       animation: scrollTestis 30s linear infinite;
@@ -1431,12 +1431,12 @@
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand">
-          <a href="#" class="nav-logo">Elevaree<span style="color:var(--pink-light)">.Academy</span></a>
+          <a href="index.html" class="nav-logo">Elevaree<span style="color:var(--pink-light)">.Academy</span></a>
           <p>Tempat terpercaya untuk meningkatkan kemampuan Bahasa Inggris dengan metode modern, tutor berpengalaman, dan hasil yang nyata.</p>
           <div class="footer-socials">
-            <a href="#" class="social-icon" title="Instagram">&#128247;</a>
-            <a href="#" class="social-icon" title="TikTok">&#127925;</a>
-            <a href="#" class="social-icon" title="YouTube">&#127902;</a>
+            <span class="social-icon" title="Instagram segera hadir" aria-label="Instagram segera hadir">&#128247;</span>
+            <span class="social-icon" title="TikTok segera hadir" aria-label="TikTok segera hadir">&#127925;</span>
+            <span class="social-icon" title="YouTube segera hadir" aria-label="YouTube segera hadir">&#127902;</span>
             <a href="https://wa.me/6282261301538" class="social-icon" title="WhatsApp" target="_blank" rel="noopener noreferrer">&#128172;</a>
           </div>
         </div>
@@ -1467,9 +1467,9 @@
           <h4>Kontak</h4>
           <ul>
             <li><a href="https://wa.me/6282261301538" target="_blank" rel="noopener noreferrer">&#128241; WhatsApp</a></li>
-            <li><a href="/cdn-cgi/l/email-protection#3a53545c557a5f565f4c5b485f5f145b595b5e5f5743">&#9993;&#65039; Email Kami</a></li>
-            <li><a href="#">&#128205; Lokasi Kami</a></li>
-            <li><a href="#">&#8987; Jam Operasional</a></li>
+            <li><a href="mailto:info@elevaree.academy">&#9993;&#65039; Email Kami</a></li>
+            <li><a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20tanya%20lokasi%20dan%20kelas%20online" target="_blank" rel="noopener noreferrer">&#128205; Lokasi Kami</a></li>
+            <li><a href="https://wa.me/6282261301538?text=Halo%20Elevaree!%20Saya%20ingin%20tanya%20jam%20operasional" target="_blank" rel="noopener noreferrer">&#8987; Jam Operasional</a></li>
           </ul>
         </div>
       </div>
