@@ -11,9 +11,9 @@ const programs = [
     badge: 'Teens · Usia 13-17 Tahun',
     tagline: 'Program Bahasa Inggris untuk remaja yang ingin lebih percaya diri saat speaking, memahami grammar, dan siap berkomunikasi di sekolah maupun lingkungan global.',
     priceLabel: '400K',
-    priceUnit: '/bulan',
+    priceUnit: '/2 minggu',
     basePrice: 400000,
-    priceMeta: '8x pertemuan · 90 menit/sesi · Maks 10 siswa per kelas',
+    priceMeta: '10x pertemuan · 90 menit/sesi · per 2 minggu · Maks 10 siswa per kelas',
     sectionTitle: 'Kenapa Pilih<br><em>English for Teens?</em>',
     features: [
       ['💬', 'Conversation class untuk bangun percaya diri'],
