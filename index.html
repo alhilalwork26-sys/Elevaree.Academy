@@ -65,6 +65,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2001,6 +2003,156 @@ Konsultasi gratis, tidak ada kewajiban daftar! 😊`
       const text = `Halo Elevaree Academy! 👋\n\nSaya ingin mendaftar kursus.\n\n📌 Data Pendaftar:\nNama: ${name}\nNo. WA: ${phone}\nProgram: ${program}${msg ? '\n\nPesan: ' + msg : ''}\n\nMohon info selanjutnya ya. Terima kasih! 🙏`;
       window.open(`https://wa.me/6282261301538?text=${encodeURIComponent(text)}`, '_blank');
     }
+
+    // ── Admin CMS bridge: public read, static fallback ──
+    const adminFirebaseConfig = {
+      apiKey: "AIzaSyAluHn1_-fOpvk4uREGDLu8RRtHM5aWGGo",
+      authDomain: "elevareeacademy-2281a.firebaseapp.com",
+      databaseURL: "https://elevareeacademy-2281a-default-rtdb.firebaseio.com",
+      projectId: "elevareeacademy-2281a",
+      storageBucket: "elevareeacademy-2281a.firebasestorage.app",
+      messagingSenderId: "735519195892",
+      appId: "1:735519195892:web:e11f27bd88a3de5ebb94a1",
+      measurementId: "G-PFBMVYLBPR"
+    };
+
+    const programNameAliases = {
+      'ielts class': 'IELTS Preparation',
+      'toefl class': 'TOEFL Preparation',
+      'pte preparation': 'English PTE',
+      'english private': 'English Privat'
+    };
+
+    function cmsText(value) {
+      return String(value || '').trim();
+    }
+
+    function normalizeProgramName(name) {
+      const clean = cmsText(name);
+      return programNameAliases[clean.toLowerCase()] || clean;
+    }
+
+    function formatCmsPrice(value) {
+      const numeric = Number(String(value || '').replace(/[^\d]/g, ''));
+      if (!numeric) return '';
+      if (numeric >= 1000000) {
+        return `${(numeric / 1000000).toLocaleString('id-ID', { maximumFractionDigits: 1 })}JT`;
+      }
+      return `${Math.round(numeric / 1000)}K`;
+    }
+
+    function inferPricePeriod(program) {
+      const duration = cmsText(program.duration).toLowerCase();
+      const name = normalizeProgramName(program.name).toLowerCase();
+      if (duration.includes('minggu') || name.includes('kids')) return '/2 minggu';
+      return '/bulan';
+    }
+
+    function formatProgramNote(program) {
+      const duration = cmsText(program.duration);
+      const capacity = cmsText(program.capacity);
+      const capacityLabel = capacity
+        ? normalizeProgramName(program.name).toLowerCase().includes('privat')
+          ? '1 tutor 1 siswa'
+          : `Maks ${capacity} siswa per kelas`
+        : '';
+      return [duration, capacityLabel].filter(Boolean).join(' · ');
+    }
+
+    function updateProgramCards(programs) {
+      const cards = Array.from(document.querySelectorAll('.prog-card'));
+      programs
+        .filter(program => cmsText(program.status).toLowerCase() !== 'inactive')
+        .forEach(program => {
+          const name = normalizeProgramName(program.name);
+          const card = cards.find(item => item.querySelector('.prog-name')?.textContent.trim() === name);
+          if (!card) return;
+
+          const desc = cmsText(program.desc);
+          const price = formatCmsPrice(program.price);
+          const note = formatProgramNote(program);
+          const category = cmsText(program.category);
+
+          if (desc) card.querySelector('.prog-desc').textContent = desc;
+          if (price) card.querySelector('.prog-price-num').textContent = price;
+          card.querySelector('.prog-price-period').textContent = inferPricePeriod(program);
+          if (note) card.querySelector('.prog-price-note').textContent = note;
+          if (category && !['design', 'technology', 'marketing', 'language'].includes(category.toLowerCase())) {
+            card.querySelector('.prog-badge').textContent = category;
+          }
+        });
+    }
+
+    function getScheduleGroup(schedule) {
+      const day = cmsText(schedule.day).toLowerCase();
+      const room = cmsText(schedule.room).toLowerCase();
+      if (room.includes('zoom') || room.includes('online')) return 'online';
+      if (['saturday', 'sunday', 'sabtu', 'minggu'].some(item => day.includes(item))) return 'weekend';
+      return 'weekday';
+    }
+
+    function getScheduleLevel(program) {
+      const name = normalizeProgramName(program).toLowerCase();
+      if (name.includes('kids')) return ['Kids', 'dot-beginner'];
+      if (name.includes('teens')) return ['Intermediate', 'dot-intermediate'];
+      if (name.includes('pte')) return ['Professional', 'dot-advanced'];
+      return ['Test Prep', 'dot-advanced'];
+    }
+
+    function getScheduleMode(schedule) {
+      const room = cmsText(schedule.room);
+      if (room.toLowerCase().includes('zoom')) return 'Zoom';
+      if (room.toLowerCase().includes('online')) return 'Online';
+      if (room) return room;
+      return 'Online';
+    }
+
+    function renderScheduleRow(schedule) {
+      const program = normalizeProgramName(schedule.programName || schedule.program);
+      const [level, levelClass] = getScheduleLevel(program);
+      const quota = cmsText(schedule.quota || schedule.capacity) || '10';
+      const filled = cmsText(schedule.enrolled || schedule.current || schedule.booked) || '0';
+      return `
+        <tr>
+          <td>${cmsText(schedule.time) || '-'}</td>
+          <td>${program || '-'}</td>
+          <td><span class="sched-level-dot ${levelClass}">${level}</span></td>
+          <td>${cmsText(schedule.tutorName || schedule.tutor) || '-'}</td>
+          <td><span class="sched-tag tag-online">${getScheduleMode(schedule)}</span></td>
+          <td>${filled}/${quota}</td>
+        </tr>
+      `;
+    }
+
+    function updateScheduleTables(schedules) {
+      const openSchedules = schedules.filter(schedule => !['closed', 'inactive'].includes(cmsText(schedule.status).toLowerCase()));
+      if (!openSchedules.length) return;
+
+      ['weekday', 'weekend', 'online'].forEach(group => {
+        const rows = openSchedules.filter(schedule => getScheduleGroup(schedule) === group);
+        const body = document.querySelector(`#tab-${group} tbody`);
+        if (!body || !rows.length) return;
+        body.innerHTML = rows.map(renderScheduleRow).join('');
+      });
+    }
+
+    async function connectAdminContent() {
+      if (!window.firebase?.firestore) return;
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(adminFirebaseConfig);
+        const db = firebase.firestore();
+        const [programSnap, scheduleSnap] = await Promise.all([
+          db.collection('programs').get(),
+          db.collection('schedules').get()
+        ]);
+        updateProgramCards(programSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        updateScheduleTables(scheduleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (error) {
+        console.warn('Admin content belum bisa dibaca, memakai konten statis.', error);
+      }
+    }
+
+    window.addEventListener('load', connectAdminContent);
   </script>
 </body>
 </html>
