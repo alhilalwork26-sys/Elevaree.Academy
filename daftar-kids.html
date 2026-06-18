@@ -345,7 +345,7 @@
           <span class="price-big">150K</span>
           <span class="price-unit">/2 minggu</span>
         </div>
-        <p class="price-meta">10x pertemuan &middot; per 2 minggu &middot; Maks 6 siswa per kelas</p>
+        <p class="price-meta">10x pertemuan &middot; per 2 minggu &middot; Maks 10 siswa per kelas</p>
       </div>
 
       <div class="divider"></div>
@@ -365,7 +365,7 @@
           </div>
           <div class="feature-item">
             <div class="feature-icon">👥</div>
-            <div class="feature-text">Kelas kecil maks 6 siswa — perhatian optimal</div>
+            <div class="feature-text">Kelas kecil maks 10 siswa — perhatian optimal</div>
           </div>
           <div class="feature-item">
             <div class="feature-icon">📋</div>
@@ -466,7 +466,7 @@
               Berapa maksimal siswa per kelas?
               <svg viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
             </button>
-            <div class="faq-a"><div class="faq-a-inner">Maksimal 6 siswa per kelas untuk program Kids. Ini sengaja kami batasi agar tutor bisa fokus memperhatikan setiap anak secara individual dan suasana kelas tetap menyenangkan.</div></div>
+            <div class="faq-a"><div class="faq-a-inner">Maksimal 10 siswa per kelas untuk program Kids. Ini sengaja kami batasi agar tutor bisa fokus memperhatikan setiap anak secara individual dan suasana kelas tetap menyenangkan.</div></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" onclick="toggleFaq(this)">
@@ -684,7 +684,7 @@
 
     // ── COUNTER ──
     function changeCount(delta) {
-      count = Math.max(1, Math.min(6, count + delta));
+      count = Math.max(1, Math.min(10, count + delta));
       document.getElementById('countVal').textContent = count;
       updateSummary();
     }
