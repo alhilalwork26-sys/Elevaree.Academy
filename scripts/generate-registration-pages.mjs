@@ -13,7 +13,7 @@ const programs = [
     priceLabel: '400K',
     priceUnit: '/2 minggu',
     basePrice: 400000,
-    priceMeta: '10x pertemuan · 90 menit/sesi · per 2 minggu · Maks 10 siswa per kelas',
+    priceMeta: '10x pertemuan · 60 menit/sesi · per 2 minggu · Maks 10 siswa per kelas',
     sectionTitle: 'Kenapa Pilih<br><em>English for Teens?</em>',
     features: [
       ['💬', 'Conversation class untuk bangun percaya diri'],
@@ -65,7 +65,7 @@ const programs = [
     priceLabel: '650K',
     priceUnit: '/bulan',
     basePrice: 650000,
-    priceMeta: '10x pertemuan · 90 menit/sesi · Fokus target band score',
+    priceMeta: '10x pertemuan · 60 menit/sesi · Fokus target band score',
     sectionTitle: 'Kenapa Pilih<br><em>IELTS Preparation?</em>',
     features: [
       ['🎯', 'Diagnostic test dan target score mapping'],
@@ -110,7 +110,7 @@ const programs = [
     priceLabel: '600K',
     priceUnit: '/bulan',
     basePrice: 600000,
-    priceMeta: '10x pertemuan · 90 menit/sesi · Latihan soal intensif',
+    priceMeta: '10x pertemuan · 60 menit/sesi · Latihan soal intensif',
     sectionTitle: 'Kenapa Pilih<br><em>TOEFL Preparation?</em>',
     features: [
       ['🎧', 'Listening practice dengan strategi menangkap ide utama'],
@@ -155,7 +155,7 @@ const programs = [
     priceLabel: '700K',
     priceUnit: '/bulan',
     basePrice: 700000,
-    priceMeta: '8x pertemuan · 90 menit/sesi · PTE strategy & simulation',
+    priceMeta: '8x pertemuan · 60 menit/sesi · PTE strategy & simulation',
     sectionTitle: 'Kenapa Pilih<br><em>English PTE?</em>',
     features: [
       ['🎙️', 'Speaking practice untuk format jawaban PTE'],
@@ -200,7 +200,7 @@ const programs = [
     priceLabel: '900K',
     priceUnit: '/bulan',
     basePrice: 900000,
-    priceMeta: '8x pertemuan · 90 menit/sesi · 1 tutor 1 siswa',
+    priceMeta: '8x pertemuan · 60 menit/sesi · 1 tutor 1 siswa',
     sectionTitle: 'Kenapa Pilih<br><em>English Privat?</em>',
     features: [
       ['👤', 'Private class 1 tutor 1 siswa'],
