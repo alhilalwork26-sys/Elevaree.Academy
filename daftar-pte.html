@@ -57,6 +57,12 @@
     .feature-item { display: flex; align-items: flex-start; gap: 10px; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
     .feature-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--pink-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
     .feature-text { font-size: .85rem; color: var(--text-2); font-weight: 500; line-height: 1.4; }
+    .stage-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    .stage-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-height: 142px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .stage-card:hover { border-color: var(--pink-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(188,97,134,.09); }
+    .stage-step { display: inline-flex; align-items: center; justify-content: center; border-radius: 99px; background: var(--pink-pale); color: var(--pink); padding: 4px 9px; font-size: .67rem; font-weight: 800; margin-bottom: 10px; }
+    .stage-name { font-size: .86rem; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 6px; }
+    .stage-card p { font-size: .75rem; color: var(--text-3); line-height: 1.5; }
     .req-list { display: flex; flex-direction: column; gap: 10px; }
     .req-item { display: flex; align-items: flex-start; gap: 12px; }
     .req-num { width: 24px; height: 24px; border-radius: 50%; background: var(--pink-pale); color: var(--pink); font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
@@ -87,6 +93,12 @@
     .picker-info .pi-date { font-size: .75rem; color: var(--text-3); margin-top: 1px; }
     .picker-tag { font-size: .67rem; font-weight: 700; padding: 3px 8px; border-radius: 99px; white-space: nowrap; }
     .tag-online { background: #d1fae5; color: #059669; }
+    .stage-picker { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .stage-option { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; background: white; padding: 11px 13px; text-align: left; font-family: 'Outfit', sans-serif; cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+    .stage-option:hover { border-color: var(--pink-light); transform: translateY(-1px); }
+    .stage-option.active { border-color: var(--pink); background: var(--pink-pale); box-shadow: 0 0 0 3px rgba(188,97,134,.08); }
+    .stage-option span { display: block; color: var(--pink); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 2px; }
+    .stage-option strong { color: var(--text); font-size: .83rem; line-height: 1.25; }
     .counter-row { display: flex; align-items: center; gap: 0; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
     .counter-btn { width: 44px; height: 44px; background: var(--off-white); border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-2); font-weight: 500; transition: background .2s; flex-shrink: 0; }
     .counter-btn:hover { background: var(--pink-pale); color: var(--pink); }
@@ -123,6 +135,7 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .feature-grid { grid-template-columns: 1fr; }
+      .stage-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .breadcrumb { padding-top: calc(var(--nav-h) + 16px); }
@@ -215,6 +228,7 @@
           </div>
         </div>
       </div>
+
 
       <div class="divider"></div>
 
@@ -328,6 +342,7 @@
             </div>
           </div>
 
+
           <div>
             <label class="field-label">Jumlah Peserta</label>
             <div class="counter-row">
@@ -402,9 +417,11 @@
     const BASE_PRICE = 700000;
     const MAX_PARTICIPANTS = 8;
     const PROMOS = {"PTE20":20,"ELEVAREE10":10,"COBA15":15};
+    const HAS_STAGES = false;
     const WA_NUMBER = '6282261301538';
     let count = 1;
     let selectedScheduleId = null;
+    let selectedStage = null;
     let discountPct = 0;
 
     const navbar = document.getElementById('navbar');
@@ -428,6 +445,13 @@
       opt.classList.add('active');
       selectedScheduleId = opt.dataset.id;
       updateSummary();
+    }
+
+    function pickStage(opt) {
+      document.querySelectorAll('#stagePicker .stage-option').forEach(p => p.classList.remove('active'));
+      opt.classList.add('active');
+      selectedStage = opt.dataset.stage;
+      validateForm();
     }
 
     function changeCount(delta) {
@@ -472,7 +496,7 @@
     }
 
     function validateForm() {
-      document.getElementById('submitBtn').disabled = !selectedScheduleId;
+      document.getElementById('submitBtn').disabled = !selectedScheduleId || (HAS_STAGES && !selectedStage);
     }
 
     function submitForm() {
@@ -489,6 +513,7 @@
         schedule: schName,
         date: schDate,
         mode: schMode,
+        stage: selectedStage || '-',
         count: String(count),
         promo: promoCode && discountPct > 0 ? `${promoCode} (${discountPct}% off)` : '-',
         total: `Rp${total.toLocaleString('id-ID')}${PRICE_UNIT}`

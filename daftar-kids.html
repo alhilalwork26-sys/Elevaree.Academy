@@ -114,6 +114,12 @@
     }
     .feature-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--pink-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
     .feature-text { font-size: .85rem; color: var(--text-2); font-weight: 500; line-height: 1.4; }
+    .stage-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    .stage-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-height: 142px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .stage-card:hover { border-color: var(--pink-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(188,97,134,.09); }
+    .stage-step { display: inline-flex; align-items: center; justify-content: center; border-radius: 99px; background: var(--pink-pale); color: var(--pink); padding: 4px 9px; font-size: .67rem; font-weight: 800; margin-bottom: 10px; }
+    .stage-name { font-size: .86rem; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 6px; }
+    .stage-card p { font-size: .75rem; color: var(--text-3); line-height: 1.5; }
 
     /* Requirements */
     .req-list { display: flex; flex-direction: column; gap: 10px; }
@@ -190,6 +196,12 @@
     .picker-info .pi-date { font-size: .75rem; color: var(--text-3); margin-top: 1px; }
     .picker-tag { font-size: .67rem; font-weight: 700; padding: 3px 8px; border-radius: 99px; }
     .tag-online { background: #d1fae5; color: #059669; }
+    .stage-picker { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .stage-option { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; background: white; padding: 11px 13px; text-align: left; font-family: 'Outfit', sans-serif; cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+    .stage-option:hover { border-color: var(--pink-light); transform: translateY(-1px); }
+    .stage-option.active { border-color: var(--pink); background: var(--pink-pale); box-shadow: 0 0 0 3px rgba(188,97,134,.08); }
+    .stage-option span { display: block; color: var(--pink); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 2px; }
+    .stage-option strong { color: var(--text); font-size: .83rem; line-height: 1.25; }
 
     /* Counter */
     .counter-row { display: flex; align-items: center; gap: 0; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -269,6 +281,7 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .feature-grid { grid-template-columns: 1fr; }
+      .stage-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .breadcrumb { padding-top: calc(var(--nav-h) + 16px); }
@@ -365,6 +378,41 @@
           <div class="feature-item">
             <div class="feature-icon">🏅</div>
             <div class="feature-text">Sertifikat kelulusan di akhir program</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Learning Path -->
+      <div class="reveal reveal-delay-2">
+        <div class="sec-label">Tahapan Belajar</div>
+        <div class="sec-title">5 Tahap Menuju<br><em>English yang Fun</em></div>
+        <div class="stage-grid">
+          <div class="stage-card">
+            <div class="stage-step">Tahap 1</div>
+            <div class="stage-name">Little Starter</div>
+            <p>Mengenal bunyi, salam, warna, angka, dan instruksi sederhana dengan aktivitas bermain.</p>
+          </div>
+          <div class="stage-card">
+            <div class="stage-step">Tahap 2</div>
+            <div class="stage-name">Word Explorer</div>
+            <p>Memperkaya kosakata harian lewat songs, flashcards, dan mini games yang interaktif.</p>
+          </div>
+          <div class="stage-card">
+            <div class="stage-step">Tahap 3</div>
+            <div class="stage-name">Sentence Builder</div>
+            <p>Mulai menyusun kalimat pendek untuk memperkenalkan diri, keluarga, dan benda sekitar.</p>
+          </div>
+          <div class="stage-card">
+            <div class="stage-step">Tahap 4</div>
+            <div class="stage-name">Brave Speaker</div>
+            <p>Melatih tanya jawab, role play ringan, dan speaking confidence dalam kelas kecil.</p>
+          </div>
+          <div class="stage-card">
+            <div class="stage-step">Tahap 5</div>
+            <div class="stage-name">Young Storyteller</div>
+            <p>Anak belajar bercerita sederhana dan menampilkan mini project di akhir tahap.</p>
           </div>
         </div>
       </div>
@@ -487,6 +535,33 @@
             </div>
           </div>
 
+          <!-- Tahapan -->
+          <div>
+            <label class="field-label">Pilih Tahapan</label>
+            <div class="stage-picker" id="stagePicker">
+              <button class="stage-option" type="button" data-stage="Tahap 1 - Little Starter" onclick="pickStage(this)">
+                <span>Tahap 1</span>
+                <strong>Little Starter</strong>
+              </button>
+              <button class="stage-option" type="button" data-stage="Tahap 2 - Word Explorer" onclick="pickStage(this)">
+                <span>Tahap 2</span>
+                <strong>Word Explorer</strong>
+              </button>
+              <button class="stage-option" type="button" data-stage="Tahap 3 - Sentence Builder" onclick="pickStage(this)">
+                <span>Tahap 3</span>
+                <strong>Sentence Builder</strong>
+              </button>
+              <button class="stage-option" type="button" data-stage="Tahap 4 - Brave Speaker" onclick="pickStage(this)">
+                <span>Tahap 4</span>
+                <strong>Brave Speaker</strong>
+              </button>
+              <button class="stage-option" type="button" data-stage="Tahap 5 - Young Storyteller" onclick="pickStage(this)">
+                <span>Tahap 5</span>
+                <strong>Young Storyteller</strong>
+              </button>
+            </div>
+          </div>
+
           <!-- Jumlah peserta -->
           <div>
             <label class="field-label">Jumlah Peserta</label>
@@ -570,6 +645,7 @@
     const PROMOS = { 'KIDS20': 20, 'ELEVAREE10': 10, 'COBA15': 15 };
     let count = 1;
     let selectedScheduleId = null;
+    let selectedStage = null;
     let discountPct = 0;
 
     // ── NAV ──
@@ -596,6 +672,14 @@
       opt.classList.add('active');
       selectedScheduleId = opt.dataset.id;
       updateSummary();
+    }
+
+    // ── STAGE SELECTION ──
+    function pickStage(opt) {
+      document.querySelectorAll('#stagePicker .stage-option').forEach(p => p.classList.remove('active'));
+      opt.classList.add('active');
+      selectedStage = opt.dataset.stage;
+      validateForm();
     }
 
     // ── COUNTER ──
@@ -645,7 +729,7 @@
 
     // ── FORM VALIDATION ──
     function validateForm() {
-      document.getElementById('submitBtn').disabled = !selectedScheduleId;
+      document.getElementById('submitBtn').disabled = !selectedScheduleId || !selectedStage;
     }
 
     // ── SUBMIT → FORM PAGE ──
@@ -663,6 +747,7 @@
         schedule: schName,
         date: schDate,
         mode: schMode,
+        stage: selectedStage,
         count: String(count),
         promo: promoCode && discountPct > 0 ? `${promoCode} (${discountPct}% off)` : '-',
         total: `Rp${total.toLocaleString('id-ID')}${PRICE_UNIT}`

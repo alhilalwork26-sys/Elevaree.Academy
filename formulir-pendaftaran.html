@@ -534,6 +534,7 @@
       </div>
       <div class="summary-body">
         <div class="summary-row"><span>Program</span><strong id="sumProgram">-</strong></div>
+        <div class="summary-row"><span>Tahapan</span><strong id="sumStage">-</strong></div>
         <div class="summary-row"><span>Jadwal</span><strong id="sumSchedule">-</strong></div>
         <div class="summary-row"><span>Periode</span><strong id="sumDate">-</strong></div>
         <div class="summary-row"><span>Mode</span><strong id="sumMode">Online</strong></div>
@@ -557,6 +558,7 @@
     const state = {
       program: params.get('program') || 'Program Elevaree',
       schedule: params.get('schedule') || '-',
+      stage: params.get('stage') || '-',
       date: params.get('date') || '-',
       mode: params.get('mode') || 'Online',
       count: params.get('count') || '1',
@@ -569,6 +571,7 @@
     }
 
     setText('sumProgram', state.program);
+    setText('sumStage', state.stage);
     setText('sumSchedule', state.schedule);
     setText('sumDate', state.date);
     setText('sumMode', state.mode);
@@ -610,6 +613,7 @@
         phone: data.get('phone'),
         proofFile: proofFile ? proofFile.name : '',
         program: state.program,
+        stage: state.stage,
         schedule: state.schedule,
         date: state.date,
         mode: state.mode,

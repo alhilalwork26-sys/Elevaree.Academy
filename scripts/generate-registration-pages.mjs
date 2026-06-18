@@ -23,6 +23,13 @@ const programs = [
       ['👥', 'Kelas kecil agar tutor bisa memberi feedback personal'],
       ['🏅', 'Sertifikat kelulusan di akhir program'],
     ],
+    stages: [
+      ['Tahap 1', 'Starter Confidence', 'Membangun keberanian bicara dan grammar dasar untuk komunikasi sehari-hari.'],
+      ['Tahap 2', 'Grammar Builder', 'Menguatkan tenses, sentence patterns, dan vocabulary sekolah secara praktis.'],
+      ['Tahap 3', 'Conversation Boost', 'Latihan diskusi, role play, dan respons spontan dalam berbagai situasi.'],
+      ['Tahap 4', 'Presentation Ready', 'Membiasakan presentasi singkat, storytelling, dan menyampaikan opini dengan rapi.'],
+      ['Tahap 5', 'Global Communicator', 'Project akhir untuk speaking, writing, dan komunikasi percaya diri di konteks global.'],
+    ],
     requirementsTitle: 'Persyaratan<br><em>Untuk Remaja</em>',
     requirements: [
       ['Usia 13-17 tahun', 'materi, topik diskusi, dan aktivitas kelas disesuaikan dengan kebutuhan remaja SMP-SMA.'],
@@ -255,6 +262,36 @@ function renderProgram(program) {
             <div class="feature-text">${esc(text)}</div>
           </div>`).join('');
 
+  const stageCards = program.stages ? program.stages.map(([step, title, desc]) => `
+          <div class="stage-card">
+            <div class="stage-step">${esc(step)}</div>
+            <div class="stage-name">${esc(title)}</div>
+            <p>${esc(desc)}</p>
+          </div>`).join('') : '';
+
+  const stageInfoSection = program.stages ? `
+      <div class="divider"></div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="sec-label">Tahapan Belajar</div>
+        <div class="sec-title">5 Tahap Menuju<br><em>Progress yang Jelas</em></div>
+        <div class="stage-grid">${stageCards}
+        </div>
+      </div>
+` : '';
+
+  const stagePicker = program.stages ? `
+          <div>
+            <label class="field-label">Pilih Tahapan</label>
+            <div class="stage-picker" id="stagePicker">
+${program.stages.map(([step, title]) => `              <button class="stage-option" type="button" data-stage="${esc(step)} - ${esc(title)}" onclick="pickStage(this)">
+                <span>${esc(step)}</span>
+                <strong>${esc(title)}</strong>
+              </button>`).join('\n')}
+            </div>
+          </div>
+` : '';
+
   const requirements = program.requirements.map(([title, text], index) => `
           <div class="req-item">
             <div class="req-num">${index + 1}</div>
@@ -329,6 +366,12 @@ function renderProgram(program) {
     .feature-item { display: flex; align-items: flex-start; gap: 10px; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
     .feature-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--pink-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
     .feature-text { font-size: .85rem; color: var(--text-2); font-weight: 500; line-height: 1.4; }
+    .stage-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    .stage-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-height: 142px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .stage-card:hover { border-color: var(--pink-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(188,97,134,.09); }
+    .stage-step { display: inline-flex; align-items: center; justify-content: center; border-radius: 99px; background: var(--pink-pale); color: var(--pink); padding: 4px 9px; font-size: .67rem; font-weight: 800; margin-bottom: 10px; }
+    .stage-name { font-size: .86rem; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 6px; }
+    .stage-card p { font-size: .75rem; color: var(--text-3); line-height: 1.5; }
     .req-list { display: flex; flex-direction: column; gap: 10px; }
     .req-item { display: flex; align-items: flex-start; gap: 12px; }
     .req-num { width: 24px; height: 24px; border-radius: 50%; background: var(--pink-pale); color: var(--pink); font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
@@ -359,6 +402,12 @@ function renderProgram(program) {
     .picker-info .pi-date { font-size: .75rem; color: var(--text-3); margin-top: 1px; }
     .picker-tag { font-size: .67rem; font-weight: 700; padding: 3px 8px; border-radius: 99px; white-space: nowrap; }
     .tag-online { background: #d1fae5; color: #059669; }
+    .stage-picker { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .stage-option { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; background: white; padding: 11px 13px; text-align: left; font-family: 'Outfit', sans-serif; cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+    .stage-option:hover { border-color: var(--pink-light); transform: translateY(-1px); }
+    .stage-option.active { border-color: var(--pink); background: var(--pink-pale); box-shadow: 0 0 0 3px rgba(188,97,134,.08); }
+    .stage-option span { display: block; color: var(--pink); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 2px; }
+    .stage-option strong { color: var(--text); font-size: .83rem; line-height: 1.25; }
     .counter-row { display: flex; align-items: center; gap: 0; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
     .counter-btn { width: 44px; height: 44px; background: var(--off-white); border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-2); font-weight: 500; transition: background .2s; flex-shrink: 0; }
     .counter-btn:hover { background: var(--pink-pale); color: var(--pink); }
@@ -395,6 +444,7 @@ function renderProgram(program) {
       .nav-links { display: none; }
       .hamburger { display: flex; }
       .feature-grid { grid-template-columns: 1fr; }
+      .stage-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .breadcrumb { padding-top: calc(var(--nav-h) + 16px); }
@@ -463,6 +513,7 @@ function renderProgram(program) {
         <div class="feature-grid">${features}
         </div>
       </div>
+${stageInfoSection}
 
       <div class="divider"></div>
 
@@ -495,6 +546,7 @@ function renderProgram(program) {
             <div class="schedule-picker" id="formSchedulePicker">${schedules}
             </div>
           </div>
+${stagePicker}
 
           <div>
             <label class="field-label">Jumlah Peserta</label>
@@ -570,9 +622,11 @@ function renderProgram(program) {
     const BASE_PRICE = ${program.basePrice};
     const MAX_PARTICIPANTS = ${program.maxParticipants};
     const PROMOS = ${JSON.stringify(program.promoCodes)};
+    const HAS_STAGES = ${program.stages ? 'true' : 'false'};
     const WA_NUMBER = '${whatsappNumber}';
     let count = 1;
     let selectedScheduleId = null;
+    let selectedStage = null;
     let discountPct = 0;
 
     const navbar = document.getElementById('navbar');
@@ -596,6 +650,13 @@ function renderProgram(program) {
       opt.classList.add('active');
       selectedScheduleId = opt.dataset.id;
       updateSummary();
+    }
+
+    function pickStage(opt) {
+      document.querySelectorAll('#stagePicker .stage-option').forEach(p => p.classList.remove('active'));
+      opt.classList.add('active');
+      selectedStage = opt.dataset.stage;
+      validateForm();
     }
 
     function changeCount(delta) {
@@ -640,7 +701,7 @@ function renderProgram(program) {
     }
 
     function validateForm() {
-      document.getElementById('submitBtn').disabled = !selectedScheduleId;
+      document.getElementById('submitBtn').disabled = !selectedScheduleId || (HAS_STAGES && !selectedStage);
     }
 
     function submitForm() {
@@ -657,6 +718,7 @@ function renderProgram(program) {
         schedule: schName,
         date: schDate,
         mode: schMode,
+        stage: selectedStage || '-',
         count: String(count),
         promo: promoCode && discountPct > 0 ? \`\${promoCode} (\${discountPct}% off)\` : '-',
         total: \`Rp\${total.toLocaleString('id-ID')}\${PRICE_UNIT}\`
