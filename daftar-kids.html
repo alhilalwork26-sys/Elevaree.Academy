@@ -403,64 +403,6 @@
 
       <div class="divider"></div>
 
-      <!-- Upcoming Schedules -->
-      <div class="reveal reveal-delay-3">
-        <div class="sec-label">Periode Tersedia</div>
-        <div class="sec-title">Pilih Jadwal<br><em>yang Cocok</em></div>
-        <div class="schedule-list" id="scheduleList">
-          <div class="schedule-card" data-id="g1" data-name="Gelombang 1 — Senin & Rabu" data-date="14 Juli – 8 Agustus 2026" data-mode="Offline" data-slot="4" onclick="selectSchedule(this)">
-            <div class="sched-radio"></div>
-            <div class="sch-left">
-              <div class="sch-badge">Gelombang 1</div>
-              <div class="sch-name">Senin & Rabu · 15.30–16.30</div>
-              <div class="sch-date">14 Juli – 8 Agustus 2026</div>
-            </div>
-            <div class="sch-right">
-              <div class="sch-mode offline">Offline</div>
-              <div class="sch-slot"><strong>4</strong> kursi tersisa</div>
-            </div>
-          </div>
-          <div class="schedule-card" data-id="g2" data-name="Gelombang 1 — Selasa & Kamis" data-date="15 Juli – 7 Agustus 2026" data-mode="Offline" data-slot="2" onclick="selectSchedule(this)">
-            <div class="sched-radio"></div>
-            <div class="sch-left">
-              <div class="sch-badge">Gelombang 1</div>
-              <div class="sch-name">Selasa & Kamis · 15.30–16.30</div>
-              <div class="sch-date">15 Juli – 7 Agustus 2026</div>
-            </div>
-            <div class="sch-right">
-              <div class="sch-mode offline">Offline</div>
-              <div class="sch-slot"><strong>2</strong> kursi tersisa</div>
-            </div>
-          </div>
-          <div class="schedule-card" data-id="g3" data-name="Gelombang 2 — Online Sabtu & Minggu" data-date="11 Agustus – 5 September 2026" data-mode="Online" data-slot="5" onclick="selectSchedule(this)">
-            <div class="sched-radio"></div>
-            <div class="sch-left">
-              <div class="sch-badge">Gelombang 2 · Buka Pendaftaran</div>
-              <div class="sch-name">Sabtu & Minggu · 09.00–10.00</div>
-              <div class="sch-date">11 Agustus – 5 September 2026</div>
-            </div>
-            <div class="sch-right">
-              <div class="sch-mode online">Online</div>
-              <div class="sch-slot"><strong>5</strong> kursi tersisa</div>
-            </div>
-          </div>
-          <div class="schedule-card" data-id="g4" data-name="Gelombang 2 — Senin & Rabu" data-date="11 Agustus – 5 September 2026" data-mode="Offline" data-slot="6" onclick="selectSchedule(this)">
-            <div class="sched-radio"></div>
-            <div class="sch-left">
-              <div class="sch-badge">Gelombang 2 · Buka Pendaftaran</div>
-              <div class="sch-name">Senin & Rabu · 15.30–16.30</div>
-              <div class="sch-date">11 Agustus – 5 September 2026</div>
-            </div>
-            <div class="sch-right">
-              <div class="sch-mode offline">Offline</div>
-              <div class="sch-slot"><strong>6</strong> kursi tersisa</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
       <!-- FAQ -->
       <div class="reveal reveal-delay-4">
         <div class="sec-label">FAQ</div>
@@ -648,29 +590,11 @@
     }, { threshold: 0.12 });
     reveals.forEach(r => obs.observe(r));
 
-    // ── SCHEDULE SELECTION (left column) ──
-    function selectSchedule(card) {
-      document.querySelectorAll('#scheduleList .schedule-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      const id = card.dataset.id;
-      selectedScheduleId = id;
-      // sync form picker
-      document.querySelectorAll('#formSchedulePicker .picker-option').forEach(p => {
-        p.classList.toggle('active', p.dataset.id === id);
-      });
-      updateSummary();
-    }
-
     // ── SCHEDULE SELECTION (form picker) ──
     function pickSchedule(opt) {
       document.querySelectorAll('#formSchedulePicker .picker-option').forEach(p => p.classList.remove('active'));
       opt.classList.add('active');
-      const id = opt.dataset.id;
-      selectedScheduleId = id;
-      // sync left column
-      document.querySelectorAll('#scheduleList .schedule-card').forEach(c => {
-        c.classList.toggle('selected', c.dataset.id === id);
-      });
+      selectedScheduleId = opt.dataset.id;
       updateSummary();
     }
 
@@ -727,10 +651,10 @@
     // ── SUBMIT → WHATSAPP ──
     function submitForm() {
       const promoCode = document.getElementById('promoInput').value.trim().toUpperCase();
-      const selCard = document.querySelector(`#scheduleList .schedule-card[data-id="${selectedScheduleId}"]`);
-      const schName = selCard ? selCard.querySelector('.sch-name').textContent : '';
-      const schDate = selCard ? selCard.querySelector('.sch-date').textContent : '';
-      const schMode = selCard ? selCard.dataset.mode : '';
+      const selOpt  = document.querySelector(`#formSchedulePicker .picker-option[data-id="${selectedScheduleId}"]`);
+      const schName = selOpt ? selOpt.querySelector('.pi-name').textContent : '';
+      const schDate = selOpt ? selOpt.querySelector('.pi-date').textContent : '';
+      const schMode = selOpt ? selOpt.querySelector('.picker-tag').textContent : '';
       const subtotal = BASE_PRICE * count;
       const discAmt  = Math.round(subtotal * discountPct / 100);
       const total    = subtotal - discAmt;
