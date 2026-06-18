@@ -264,8 +264,13 @@ function renderProgram(program) {
 
   const stageCards = program.stages ? program.stages.map(([step, title, desc]) => `
           <div class="stage-card">
-            <div class="stage-step">${esc(step)}</div>
-            <div class="stage-name">${esc(title)}</div>
+            <div class="stage-head">
+              <div class="stage-step">${esc(step.replace('Tahap ', ''))}</div>
+              <div>
+                <div class="stage-kicker">${esc(step)}</div>
+                <div class="stage-name">${esc(title)}</div>
+              </div>
+            </div>
             <p>${esc(desc)}</p>
           </div>`).join('') : '';
 
@@ -366,12 +371,16 @@ ${program.stages.map(([step, title]) => `              <button class="stage-opti
     .feature-item { display: flex; align-items: flex-start; gap: 10px; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
     .feature-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--pink-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
     .feature-text { font-size: .85rem; color: var(--text-2); font-weight: 500; line-height: 1.4; }
-    .stage-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-    .stage-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-height: 142px; transition: border-color .2s, transform .2s, box-shadow .2s; }
-    .stage-card:hover { border-color: var(--pink-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(188,97,134,.09); }
-    .stage-step { display: inline-flex; align-items: center; justify-content: center; border-radius: 99px; background: var(--pink-pale); color: var(--pink); padding: 4px 9px; font-size: .67rem; font-weight: 800; margin-bottom: 10px; }
-    .stage-name { font-size: .86rem; font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 6px; }
-    .stage-card p { font-size: .75rem; color: var(--text-3); line-height: 1.5; }
+    .stage-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; position: relative; }
+    .stage-card { background: linear-gradient(180deg, #fff 0%, #fffafd 100%); border: 1px solid var(--border); border-radius: 18px; padding: 18px; min-height: 152px; position: relative; overflow: hidden; transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .stage-card::after { content: ''; position: absolute; inset: auto 18px 0 auto; width: 58px; height: 58px; border-radius: 50%; background: var(--pink-pale); opacity: .65; transform: translate(22px, 24px); }
+    .stage-card:nth-child(5) { grid-column: 1 / -1; min-height: 128px; }
+    .stage-card:hover { border-color: var(--pink-light); transform: translateY(-2px); box-shadow: 0 14px 34px rgba(188,97,134,.10); }
+    .stage-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; position: relative; z-index: 1; }
+    .stage-step { width: 42px; height: 42px; border-radius: 50%; background: var(--pink); color: white; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 10px 22px rgba(188,97,134,.18); }
+    .stage-kicker { color: var(--pink); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+    .stage-name { font-size: 1rem; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .stage-card p { font-size: .84rem; color: var(--text-3); line-height: 1.65; position: relative; z-index: 1; max-width: 95%; }
     .req-list { display: flex; flex-direction: column; gap: 10px; }
     .req-item { display: flex; align-items: flex-start; gap: 12px; }
     .req-num { width: 24px; height: 24px; border-radius: 50%; background: var(--pink-pale); color: var(--pink); font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
@@ -445,6 +454,7 @@ ${program.stages.map(([step, title]) => `              <button class="stage-opti
       .hamburger { display: flex; }
       .feature-grid { grid-template-columns: 1fr; }
       .stage-grid { grid-template-columns: 1fr; }
+      .stage-card:nth-child(5) { grid-column: auto; }
     }
     @media (max-width: 480px) {
       .breadcrumb { padding-top: calc(var(--nav-h) + 16px); }
