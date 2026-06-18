@@ -590,26 +590,9 @@
             </div>
           </div>
 
-          <!-- Form fields -->
-          <div class="form-field">
-            <label class="field-label">Nama Anak</label>
-            <input class="form-input" id="childName" type="text" placeholder="Masukkan nama lengkap anak" />
-          </div>
-
-          <div class="form-field">
-            <label class="field-label">Nomor WhatsApp Orang Tua</label>
-            <input class="form-input" id="parentPhone" type="tel" placeholder="contoh: 08123456789" />
-          </div>
-
-          <div class="form-field">
-            <label class="field-label">Email (opsional)</label>
-            <input class="form-input" id="parentEmail" type="email" placeholder="email@contoh.com" />
-          </div>
-
           <!-- Submit -->
           <button class="submit-btn" id="submitBtn" onclick="submitForm()" disabled>
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.997 2C6.477 2 2 6.477 2 11.997c0 1.76.457 3.41 1.257 4.845L2 22l5.275-1.238A9.945 9.945 0 0011.997 22C17.517 22 22 17.523 22 11.997 22 6.477 17.517 2 11.997 2z"/></svg>
-            Lanjut via WhatsApp
+            Isi Formulir Yuk! ✨
           </button>
 
           <p class="form-note">
@@ -738,28 +721,16 @@
 
     // ── FORM VALIDATION ──
     function validateForm() {
-      const name = document.getElementById('childName').value.trim();
-      const phone = document.getElementById('parentPhone').value.trim();
-      const valid = name.length >= 2 && phone.length >= 9 && selectedScheduleId;
-      document.getElementById('submitBtn').disabled = !valid;
+      document.getElementById('submitBtn').disabled = !selectedScheduleId;
     }
-
-    document.getElementById('childName').addEventListener('input', validateForm);
-    document.getElementById('parentPhone').addEventListener('input', validateForm);
 
     // ── SUBMIT → WHATSAPP ──
     function submitForm() {
-      const name = document.getElementById('childName').value.trim();
-      const phone = document.getElementById('parentPhone').value.trim();
-      const email = document.getElementById('parentEmail').value.trim();
       const promoCode = document.getElementById('promoInput').value.trim().toUpperCase();
-
-      // Get selected schedule name & date from left column cards
       const selCard = document.querySelector(`#scheduleList .schedule-card[data-id="${selectedScheduleId}"]`);
       const schName = selCard ? selCard.querySelector('.sch-name').textContent : '';
       const schDate = selCard ? selCard.querySelector('.sch-date').textContent : '';
       const schMode = selCard ? selCard.dataset.mode : '';
-
       const subtotal = BASE_PRICE * count;
       const discAmt  = Math.round(subtotal * discountPct / 100);
       const total    = subtotal - discAmt;
@@ -769,11 +740,6 @@
         ``,
         `Saya ingin mendaftarkan anak saya ke program *English for Kids*.`,
         ``,
-        `📌 *Data Pendaftaran:*`,
-        `Nama Anak    : ${name}`,
-        `No. WA Ortu  : ${phone}`,
-        email ? `Email        : ${email}` : null,
-        ``,
         `🗓️ *Jadwal Dipilih:*`,
         `${schName}`,
         `${schDate} · ${schMode}`,
@@ -782,7 +748,7 @@
         promoCode && discountPct > 0 ? `🏷️ Kode Promo     : ${promoCode} (diskon ${discountPct}%)` : null,
         `💰 Total          : Rp${total.toLocaleString('id-ID')}/bulan`,
         ``,
-        `Mohon konfirmasi ketersediaan dan langkah selanjutnya. Terima kasih! 🙏`
+        `Mohon info langkah selanjutnya. Terima kasih! 🙏`
       ].filter(l => l !== null).join('\n');
 
       window.open(`https://wa.me/6282261301538?text=${encodeURIComponent(msg)}`, '_blank');
