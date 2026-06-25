@@ -2137,15 +2137,37 @@ Konsultasi gratis, tidak ada kewajiban daftar! 😊`
       });
     }
 
+    function updateHomeContent(content) {
+      if (!content) return;
+      const eyebrow = cmsText(content.heroEyebrow);
+      const heroTitle = cmsText(content.heroTitle);
+      const heroHighlight = cmsText(content.heroHighlight);
+      const heroSuffix = cmsText(content.heroSuffix);
+      const heroSub = cmsText(content.heroSub);
+
+      if (eyebrow) document.querySelector('.hero-eyebrow').textContent = eyebrow;
+      if (heroTitle || heroHighlight || heroSuffix) {
+        const titleParts = [
+          heroTitle || 'Speak Up,',
+          heroHighlight ? `<em>${heroHighlight}</em>` : '<em>Shine Bright!</em>',
+          heroSuffix || 'Saatnya Anak Berani Berbahasa Inggris'
+        ];
+        document.querySelector('#hero h1').innerHTML = titleParts.join('<br>');
+      }
+      if (heroSub) document.querySelector('.hero-sub').textContent = heroSub;
+    }
+
     async function connectAdminContent() {
       if (!window.firebase?.firestore) return;
       try {
         if (!firebase.apps.length) firebase.initializeApp(adminFirebaseConfig);
         const db = firebase.firestore();
-        const [programSnap, scheduleSnap] = await Promise.all([
+        const [programSnap, scheduleSnap, homeSnap] = await Promise.all([
           db.collection('programs').get(),
-          db.collection('schedules').get()
+          db.collection('schedules').get(),
+          db.collection('siteContent').doc('home').get()
         ]);
+        updateHomeContent(homeSnap.exists ? homeSnap.data() : null);
         updateProgramCards(programSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         updateScheduleTables(scheduleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       } catch (error) {

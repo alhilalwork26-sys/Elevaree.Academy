@@ -19,6 +19,11 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
 
+    match /siteContent/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
     match /students/{document=**} {
       allow read, write: if request.auth != null;
     }
@@ -33,4 +38,3 @@ service cloud.firestore {
   }
 }
 ```
-

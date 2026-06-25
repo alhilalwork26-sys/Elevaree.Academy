@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Konten Website - Elevaree.Academy</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎀</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <style>
+    :root {
+      --pink: #BC6186;
+      --pink-2: #FAAFCC;
+      --pale: #FDF0F6;
+      --rose: #9E4D71;
+      --text: #1C1C1E;
+      --muted: #6E6E73;
+      --line: #F0DDE7;
+      --white: #FFFFFF;
+      --bg: #FFF8FB;
+      --shadow: 0 22px 60px rgba(188,97,134,.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      min-height: 100vh;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(250,175,204,.34), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(188,97,134,.12), transparent 30%),
+        linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+    }
+    button, input, textarea, select { font: inherit; }
+    button { border: 0; cursor: pointer; }
+    a { color: inherit; }
+
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .topbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    .brand {
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .brand span { color: var(--pink); }
+    .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 0 18px;
+      font-weight: 700;
+      font-size: .9rem;
+      transition: transform .2s, box-shadow .2s, background .2s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { color: #fff; background: linear-gradient(135deg, var(--pink), var(--rose)); box-shadow: 0 12px 28px rgba(188,97,134,.22); }
+    .btn-soft { color: var(--pink); background: var(--pale); border: 1px solid var(--line); }
+    .btn-ghost { color: var(--muted); background: #fff; border: 1px solid var(--line); }
+    .btn-danger { color: #B42318; background: #FFF1F0; border: 1px solid #FFD6D2; }
+    .hidden { display: none !important; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+    .hero-card, .login-card, .panel, .table-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.86);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .hero-card { padding: clamp(26px, 5vw, 44px); overflow: hidden; position: relative; }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      right: -100px;
+      top: -100px;
+      background: var(--pale);
+    }
+    .eyebrow {
+      color: var(--pink);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .72rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.35rem, 5vw, 4.4rem);
+      line-height: .98;
+      font-weight: 600;
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-card p { color: var(--muted); line-height: 1.8; margin-top: 16px; max-width: 620px; position: relative; z-index: 1; }
+    .status-card { padding: 22px; display: grid; gap: 14px; }
+    .status-card .stat { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+    .stat label { display: block; color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; margin-bottom: 6px; }
+    .stat strong { font-size: 1.45rem; }
+
+    .login-card { max-width: 440px; margin: 42px auto; padding: 28px; }
+    .login-card h2, .panel h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 8px; }
+    .login-card p, .panel-sub { color: var(--muted); line-height: 1.65; margin-bottom: 22px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .field { display: grid; gap: 7px; margin-bottom: 14px; }
+    .field.full { grid-column: 1 / -1; }
+    label { color: var(--text); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; }
+    input, textarea, select {
+      width: 100%;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 13px 14px;
+      outline: 0;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    input:focus, textarea:focus, select:focus { border-color: var(--pink); box-shadow: 0 0 0 4px rgba(188,97,134,.08); }
+
+    .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin: 22px 0; }
+    .tab {
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .tab.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+    .panel { padding: 24px; margin-bottom: 18px; }
+    .panel-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+    .panel-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .table-card { overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font-size: .9rem; }
+    th { color: var(--muted); text-transform: uppercase; letter-spacing: .8px; font-size: .72rem; background: #FFFAFC; }
+    .row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .mini-btn { border-radius: 999px; padding: 8px 11px; font-size: .78rem; font-weight: 800; background: var(--pale); color: var(--pink); }
+    .mini-btn.danger { background: #FFF1F0; color: #B42318; }
+    .pill { display: inline-flex; border-radius: 999px; padding: 5px 10px; background: var(--pale); color: var(--pink); font-size: .75rem; font-weight: 800; }
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      max-width: 360px;
+      background: var(--text);
+      color: #fff;
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .toast.show { opacity: 1; transform: none; }
+    .empty { padding: 26px; color: var(--muted); text-align: center; }
+    .small-note { color: var(--muted); font-size: .86rem; line-height: 1.6; margin-top: 12px; }
+    @media (max-width: 860px) {
+      .hero, .form-grid { grid-template-columns: 1fr; }
+      .panel-head { flex-direction: column; }
+      th:nth-child(3), td:nth-child(3) { display: none; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 24px, 1180px); padding-top: 18px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .top-actions { width: 100%; }
+      .btn { flex: 1; padding-inline: 12px; }
+      .panel, .login-card, .hero-card, .status-card { border-radius: 18px; padding: 18px; }
+      th, td { padding: 12px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="index.html">Elevaree<span>.Academy</span></a>
+      <div class="top-actions">
+        <a class="btn btn-ghost" href="index.html" target="_blank" rel="noopener noreferrer">Lihat Website</a>
+        <button class="btn btn-soft hidden" id="logoutBtn" type="button" onclick="logout()">Keluar</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Web Content Manager</div>
+        <h1>Kelola isi website tanpa ngoding.</h1>
+        <p>Gunakan halaman ini untuk mengubah headline, copy, harga program, durasi, kapasitas, dan jadwal kelas yang dibaca oleh website utama.</p>
+      </div>
+      <div class="status-card hero-card">
+        <div class="stat"><label>Status</label><strong id="authStatus">Belum login</strong></div>
+        <div class="stat"><label>Program</label><strong id="programCount">-</strong></div>
+        <div class="stat"><label>Jadwal</label><strong id="scheduleCount">-</strong></div>
+      </div>
+    </section>
+
+    <section class="login-card" id="loginPanel">
+      <h2>Login Admin</h2>
+      <p>Masuk dengan akun Firebase admin untuk mengubah konten website.</p>
+      <div class="field">
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="admin@elevaree.academy" />
+      </div>
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password admin" />
+      </div>
+      <button class="btn btn-primary" type="button" onclick="login()">Masuk</button>
+      <p class="small-note">Jika login atau simpan data gagal, pastikan Firebase Auth dan Firestore Rules sudah aktif untuk akun admin.</p>
+    </section>
+
+    <main id="adminApp" class="hidden">
+      <div class="tabs">
+        <button class="tab active" type="button" data-tab="home" onclick="showTab('home')">Hero Website</button>
+        <button class="tab" type="button" data-tab="programs" onclick="showTab('programs')">Program & Harga</button>
+        <button class="tab" type="button" data-tab="schedules" onclick="showTab('schedules')">Jadwal Kelas</button>
+      </div>
+
+      <section class="panel" id="tab-home">
+        <div class="panel-head">
+          <div>
+            <h2>Hero Website</h2>
+            <p class="panel-sub">Atur copy utama di bagian paling atas homepage.</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-soft" type="button" onclick="loadHome()">Reload</button>
+            <button class="btn btn-primary" type="button" onclick="saveHome()">Simpan Hero</button>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="heroEyebrow">Eyebrow</label>
+            <input id="heroEyebrow" placeholder="English Course Premium" />
+          </div>
+          <div class="field">
+            <label for="heroTitle">Baris 1</label>
+            <input id="heroTitle" placeholder="Speak Up," />
+          </div>
+          <div class="field">
+            <label for="heroHighlight">Baris Highlight</label>
+            <input id="heroHighlight" placeholder="Shine Bright!" />
+          </div>
+          <div class="field">
+            <label for="heroSuffix">Baris 3</label>
+            <input id="heroSuffix" placeholder="Saatnya Anak Berani Berbahasa Inggris" />
+          </div>
+          <div class="field full">
+            <label for="heroSub">Subcopy</label>
+            <textarea id="heroSub" placeholder="Kuasai Bahasa Inggris bersama tutor berpengalaman..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="tab-programs">
+        <div class="panel-head">
+          <div>
+            <h2>Program & Harga</h2>
+            <p class="panel-sub">Data ini mengganti kartu program di homepage.</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-soft" type="button" onclick="seedPrograms()">Isi Default</button>
+            <button class="btn btn-primary" type="button" onclick="clearProgramForm()">Program Baru</button>
+          </div>
+        </div>
+        <div class="form-grid">
+          <input id="programId" type="hidden" />
+          <div class="field">
+            <label for="programName">Nama Program</label>
+            <input id="programName" placeholder="English for Kids" />
+          </div>
+          <div class="field">
+            <label for="programCategory">Badge/Kategori</label>
+            <input id="programCategory" placeholder="Kids" />
+          </div>
+          <div class="field">
+            <label for="programPrice">Harga Angka</label>
+            <input id="programPrice" inputmode="numeric" placeholder="150000" />
+          </div>
+          <div class="field">
+            <label for="programDuration">Durasi</label>
+            <input id="programDuration" placeholder="10x pertemuan / 2 minggu" />
+          </div>
+          <div class="field">
+            <label for="programCapacity">Kapasitas</label>
+            <input id="programCapacity" inputmode="numeric" placeholder="10" />
+          </div>
+          <div class="field">
+            <label for="programStatus">Status</label>
+            <select id="programStatus">
+              <option>Active</option>
+              <option>Draft</option>
+              <option>Inactive</option>
+              <option>Full</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="programDesc">Deskripsi</label>
+            <textarea id="programDesc" placeholder="Deskripsi singkat program."></textarea>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-primary" type="button" onclick="saveProgram()">Simpan Program</button>
+          <button class="btn btn-ghost" type="button" onclick="clearProgramForm()">Bersihkan</button>
+        </div>
+        <div class="table-card" style="margin-top:18px">
+          <table>
+            <thead><tr><th>Program</th><th>Harga</th><th>Durasi</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="programRows"><tr><td colspan="5" class="empty">Memuat program...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="tab-schedules">
+        <div class="panel-head">
+          <div>
+            <h2>Jadwal Kelas</h2>
+            <p class="panel-sub">Jadwal aktif akan mengganti tabel jadwal di homepage.</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-soft" type="button" onclick="seedSchedules()">Isi Default</button>
+            <button class="btn btn-primary" type="button" onclick="clearScheduleForm()">Jadwal Baru</button>
+          </div>
+        </div>
+        <div class="form-grid">
+          <input id="scheduleId" type="hidden" />
+          <div class="field">
+            <label for="scheduleProgram">Program</label>
+            <input id="scheduleProgram" placeholder="English for Kids" list="programNames" />
+            <datalist id="programNames"></datalist>
+          </div>
+          <div class="field">
+            <label for="scheduleDay">Hari</label>
+            <select id="scheduleDay">
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+              <option>Sunday</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="scheduleTime">Jam</label>
+            <input id="scheduleTime" placeholder="15:30 - 16:30" />
+          </div>
+          <div class="field">
+            <label for="scheduleTutor">Tutor</label>
+            <input id="scheduleTutor" placeholder="Ms. Dinda" />
+          </div>
+          <div class="field">
+            <label for="scheduleRoom">Mode</label>
+            <input id="scheduleRoom" placeholder="Zoom Class" />
+          </div>
+          <div class="field">
+            <label for="scheduleQuota">Kuota</label>
+            <input id="scheduleQuota" inputmode="numeric" placeholder="10" />
+          </div>
+          <div class="field">
+            <label for="scheduleStatus">Status</label>
+            <select id="scheduleStatus">
+              <option>Open</option>
+              <option>Full</option>
+              <option>Closed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="scheduleNote">Catatan</label>
+            <input id="scheduleNote" placeholder="Batch sore" />
+          </div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-primary" type="button" onclick="saveSchedule()">Simpan Jadwal</button>
+          <button class="btn btn-ghost" type="button" onclick="clearScheduleForm()">Bersihkan</button>
+        </div>
+        <div class="table-card" style="margin-top:18px">
+          <table>
+            <thead><tr><th>Program</th><th>Hari/Jam</th><th>Tutor</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="scheduleRows"><tr><td colspan="5" class="empty">Memuat jadwal...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAluHn1_-fOpvk4uREGDLu8RRtHM5aWGGo",
+      authDomain: "elevareeacademy-2281a.firebaseapp.com",
+      databaseURL: "https://elevareeacademy-2281a-default-rtdb.firebaseio.com",
+      projectId: "elevareeacademy-2281a",
+      storageBucket: "elevareeacademy-2281a.firebasestorage.app",
+      messagingSenderId: "735519195892",
+      appId: "1:735519195892:web:e11f27bd88a3de5ebb94a1",
+      measurementId: "G-PFBMVYLBPR"
+    };
+
+    const defaultHome = {
+      heroEyebrow: 'English Course Premium',
+      heroTitle: 'Speak Up,',
+      heroHighlight: 'Shine Bright!',
+      heroSuffix: 'Saatnya Anak Berani Berbahasa Inggris',
+      heroSub: 'Kuasai Bahasa Inggris bersama tutor berpengalaman di Elevaree.Academy. Metode modern, suasana menyenangkan, hasil nyata.'
+    };
+
+    const defaultPrograms = [
+      { id:'english-for-kids', name:'English for Kids', category:'Kids', price:'150000', duration:'10x pertemuan / 2 minggu', capacity:'10', status:'Active', desc:'Program fun dan interaktif untuk membangun fondasi Bahasa Inggris anak melalui games, songs, dan storytelling.' },
+      { id:'english-for-teens', name:'English for Teens', category:'Teens', price:'400000', duration:'10x pertemuan / 2 minggu', capacity:'10', status:'Active', desc:'Program remaja untuk meningkatkan speaking, grammar, dan kepercayaan diri untuk sekolah maupun pergaulan global.' },
+      { id:'ielts-preparation', name:'IELTS Preparation', category:'Test Prep', price:'650000', duration:'10x pertemuan / bulan', capacity:'10', status:'Active', desc:'Program intensif untuk target studi, beasiswa, dan karier internasional dengan fokus pada 4 skill IELTS.' },
+      { id:'toefl-preparation', name:'TOEFL Preparation', category:'Test Prep', price:'600000', duration:'10x pertemuan / bulan', capacity:'10', status:'Active', desc:'Kelas terstruktur untuk membantu peserta mempersiapkan TOEFL secara efektif, baik untuk kampus maupun kebutuhan profesional.' },
+      { id:'english-pte', name:'English PTE', category:'Test Prep', price:'700000', duration:'8x pertemuan / bulan', capacity:'10', status:'Active', desc:'Program persiapan PTE melalui strategi, latihan intensif, dan simulasi terarah.' },
+      { id:'english-privat', name:'English Privat', category:'Private', price:'900000', duration:'8x pertemuan / bulan', capacity:'1', status:'Active', desc:'Program eksklusif 1-on-1 dengan tutor untuk kebutuhan belajar yang lebih fokus, fleksibel, dan sesuai target personalmu.' }
+    ];
+
+    const defaultSchedules = [
+      { id:'kids-monday-1530', program:'English for Kids', day:'Monday', time:'15:30 - 16:30', tutor:'Ms. Dinda', room:'Zoom Class', quota:'10', status:'Open', note:'Kelas kids sore' },
+      { id:'teens-wednesday-1830', program:'English for Teens', day:'Wednesday', time:'18:30 - 19:30', tutor:'Mr. Budi', room:'Zoom Class', quota:'10', status:'Open', note:'Kelas teens weekday' },
+      { id:'ielts-saturday-0900', program:'IELTS Preparation', day:'Saturday', time:'09:00 - 10:00', tutor:'Ms. Rina', room:'Zoom Class', quota:'10', status:'Open', note:'Simulasi speaking' }
+    ];
+
+    let app;
+    let auth;
+    let db;
+    let programs = [];
+    let schedules = [];
+
+    function initFirebase() {
+      if (app) return;
+      app = firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      db = firebase.firestore();
+    }
+
+    function slugify(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '') || String(Date.now());
+    }
+
+    function rupiah(value) {
+      const number = Number(String(value || '').replace(/[^\d]/g, ''));
+      return number ? `Rp${number.toLocaleString('id-ID')}` : '-';
+    }
+
+    function toast(message) {
+      const el = document.getElementById('toast');
+      el.textContent = message;
+      el.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    function getValue(id) {
+      return document.getElementById(id).value.trim();
+    }
+
+    function setValue(id, value) {
+      document.getElementById(id).value = value || '';
+    }
+
+    async function login() {
+      try {
+        initFirebase();
+        await auth.signInWithEmailAndPassword(getValue('loginEmail'), getValue('loginPassword'));
+      } catch (error) {
+        toast(`Login gagal: ${error.message}`);
+      }
+    }
+
+    async function logout() {
+      await auth.signOut();
+    }
+
+    function showTab(name) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.tab === name));
+      ['home','programs','schedules'].forEach(tab => document.getElementById(`tab-${tab}`).classList.toggle('hidden', tab !== name));
+    }
+
+    async function loadAll() {
+      await Promise.all([loadHome(), loadPrograms(), loadSchedules()]);
+    }
+
+    async function loadHome() {
+      const doc = await db.collection('siteContent').doc('home').get();
+      const data = doc.exists ? doc.data() : defaultHome;
+      Object.entries({ ...defaultHome, ...data }).forEach(([key, value]) => setValue(key, value));
+    }
+
+    async function saveHome() {
+      const data = {
+        heroEyebrow: getValue('heroEyebrow'),
+        heroTitle: getValue('heroTitle'),
+        heroHighlight: getValue('heroHighlight'),
+        heroSuffix: getValue('heroSuffix'),
+        heroSub: getValue('heroSub'),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      await db.collection('siteContent').doc('home').set(data, { merge: true });
+      toast('Hero website disimpan.');
+    }
+
+    async function loadPrograms() {
+      const snap = await db.collection('programs').get();
+      programs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+      renderPrograms();
+      document.getElementById('programCount').textContent = programs.length;
+      document.getElementById('programNames').innerHTML = programs.map(item => `<option value="${escapeHtml(item.name || '')}"></option>`).join('');
+    }
+
+    function renderPrograms() {
+      const rows = document.getElementById('programRows');
+      if (!programs.length) {
+        rows.innerHTML = '<tr><td colspan="5" class="empty">Belum ada program. Klik Isi Default atau tambah manual.</td></tr>';
+        return;
+      }
+      rows.innerHTML = programs.map(item => `
+        <tr>
+          <td><strong>${escapeHtml(item.name)}</strong><br><span class="pill">${escapeHtml(item.category || 'Program')}</span></td>
+          <td>${rupiah(item.price)}</td>
+          <td>${escapeHtml(item.duration || '-')}</td>
+          <td>${escapeHtml(item.status || 'Active')}</td>
+          <td><div class="row-actions">
+            <button class="mini-btn" type="button" onclick="editProgram('${item.id}')">Edit</button>
+            <button class="mini-btn danger" type="button" onclick="deleteProgram('${item.id}')">Hapus</button>
+          </div></td>
+        </tr>
+      `).join('');
+    }
+
+    function clearProgramForm() {
+      ['programId','programName','programCategory','programPrice','programDuration','programCapacity','programDesc'].forEach(id => setValue(id, ''));
+      setValue('programStatus', 'Active');
+    }
+
+    function editProgram(id) {
+      const item = programs.find(program => program.id === id);
+      if (!item) return;
+      setValue('programId', item.id);
+      setValue('programName', item.name);
+      setValue('programCategory', item.category);
+      setValue('programPrice', item.price);
+      setValue('programDuration', item.duration);
+      setValue('programCapacity', item.capacity);
+      setValue('programStatus', item.status || 'Active');
+      setValue('programDesc', item.desc);
+      window.scrollTo({ top: document.getElementById('tab-programs').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    async function saveProgram() {
+      const name = getValue('programName');
+      if (!name) return toast('Nama program wajib diisi.');
+      const id = getValue('programId') || slugify(name);
+      const data = {
+        name,
+        category: getValue('programCategory'),
+        price: getValue('programPrice'),
+        duration: getValue('programDuration'),
+        capacity: getValue('programCapacity'),
+        status: getValue('programStatus') || 'Active',
+        desc: getValue('programDesc'),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      await db.collection('programs').doc(id).set(data, { merge: true });
+      clearProgramForm();
+      await loadPrograms();
+      toast('Program disimpan.');
+    }
+
+    async function deleteProgram(id) {
+      if (!confirm('Hapus program ini?')) return;
+      await db.collection('programs').doc(id).delete();
+      await loadPrograms();
+      toast('Program dihapus.');
+    }
+
+    async function seedPrograms() {
+      if (!confirm('Isi/update program default Elevaree?')) return;
+      await Promise.all(defaultPrograms.map(item => db.collection('programs').doc(item.id).set({ ...item, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true })));
+      await loadPrograms();
+      toast('Program default disimpan.');
+    }
+
+    async function loadSchedules() {
+      const snap = await db.collection('schedules').get();
+      schedules = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => String(a.program || a.programName || '').localeCompare(String(b.program || b.programName || '')));
+      renderSchedules();
+      document.getElementById('scheduleCount').textContent = schedules.length;
+    }
+
+    function renderSchedules() {
+      const rows = document.getElementById('scheduleRows');
+      if (!schedules.length) {
+        rows.innerHTML = '<tr><td colspan="5" class="empty">Belum ada jadwal. Klik Isi Default atau tambah manual.</td></tr>';
+        return;
+      }
+      rows.innerHTML = schedules.map(item => `
+        <tr>
+          <td><strong>${escapeHtml(item.programName || item.program)}</strong><br><span class="pill">${escapeHtml(item.room || 'Online')}</span></td>
+          <td>${escapeHtml(item.day || '-')}<br>${escapeHtml(item.time || '-')}</td>
+          <td>${escapeHtml(item.tutorName || item.tutor || 'Open slot')}</td>
+          <td>${escapeHtml(item.status || 'Open')}</td>
+          <td><div class="row-actions">
+            <button class="mini-btn" type="button" onclick="editSchedule('${item.id}')">Edit</button>
+            <button class="mini-btn danger" type="button" onclick="deleteSchedule('${item.id}')">Hapus</button>
+          </div></td>
+        </tr>
+      `).join('');
+    }
+
+    function clearScheduleForm() {
+      ['scheduleId','scheduleProgram','scheduleTime','scheduleTutor','scheduleRoom','scheduleQuota','scheduleNote'].forEach(id => setValue(id, ''));
+      setValue('scheduleDay', 'Monday');
+      setValue('scheduleStatus', 'Open');
+    }
+
+    function editSchedule(id) {
+      const item = schedules.find(schedule => schedule.id === id);
+      if (!item) return;
+      setValue('scheduleId', item.id);
+      setValue('scheduleProgram', item.programName || item.program);
+      setValue('scheduleDay', item.day || 'Monday');
+      setValue('scheduleTime', item.time);
+      setValue('scheduleTutor', item.tutorName || item.tutor);
+      setValue('scheduleRoom', item.room);
+      setValue('scheduleQuota', item.quota || item.capacity);
+      setValue('scheduleStatus', item.status || 'Open');
+      setValue('scheduleNote', item.note);
+      window.scrollTo({ top: document.getElementById('tab-schedules').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    async function saveSchedule() {
+      const program = getValue('scheduleProgram');
+      if (!program) return toast('Program jadwal wajib diisi.');
+      const id = getValue('scheduleId') || slugify(`${program}-${getValue('scheduleDay')}-${getValue('scheduleTime')}`);
+      const data = {
+        program,
+        programName: program,
+        day: getValue('scheduleDay'),
+        time: getValue('scheduleTime'),
+        tutor: getValue('scheduleTutor'),
+        tutorName: getValue('scheduleTutor'),
+        room: getValue('scheduleRoom') || 'Zoom Class',
+        quota: getValue('scheduleQuota') || '10',
+        capacity: Number(getValue('scheduleQuota')) || 10,
+        status: getValue('scheduleStatus') || 'Open',
+        note: getValue('scheduleNote'),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      await db.collection('schedules').doc(id).set(data, { merge: true });
+      clearScheduleForm();
+      await loadSchedules();
+      toast('Jadwal disimpan.');
+    }
+
+    async function deleteSchedule(id) {
+      if (!confirm('Hapus jadwal ini?')) return;
+      await db.collection('schedules').doc(id).delete();
+      await loadSchedules();
+      toast('Jadwal dihapus.');
+    }
+
+    async function seedSchedules() {
+      if (!confirm('Isi/update jadwal default Elevaree?')) return;
+      await Promise.all(defaultSchedules.map(item => db.collection('schedules').doc(item.id).set({ ...item, capacity: Number(item.quota) || 10, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true })));
+      await loadSchedules();
+      toast('Jadwal default disimpan.');
+    }
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    window.addEventListener('load', () => {
+      initFirebase();
+      auth.onAuthStateChanged(async user => {
+        const loggedIn = Boolean(user);
+        document.getElementById('loginPanel').classList.toggle('hidden', loggedIn);
+        document.getElementById('adminApp').classList.toggle('hidden', !loggedIn);
+        document.getElementById('logoutBtn').classList.toggle('hidden', !loggedIn);
+        document.getElementById('authStatus').textContent = loggedIn ? (user.email || 'Admin login') : 'Belum login';
+        if (loggedIn) {
+          try {
+            await loadAll();
+          } catch (error) {
+            toast(`Gagal memuat data: ${error.message}`);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
