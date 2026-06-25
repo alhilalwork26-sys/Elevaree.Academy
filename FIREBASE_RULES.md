@@ -1,6 +1,8 @@
 # Firestore Rules untuk Website Elevaree
 
-Website publik hanya perlu membaca konten program dan jadwal dari admin. Data lain seperti siswa, tutor, dan enrollment tetap hanya untuk admin yang sudah login.
+Website publik hanya perlu membaca konten program dan jadwal dari admin. Admin konten baru memakai Firebase Anonymous Auth di belakang layar, jadi admin cukup memasukkan kode admin di `kelola-konten.html` dan tidak perlu akun email Firebase.
+
+Aktifkan dulu Firebase Console > Authentication > Sign-in method > Anonymous.
 
 Gunakan rules ini di Firebase Console > Firestore Database > Rules:
 

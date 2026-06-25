@@ -228,17 +228,13 @@
 
     <section class="login-card" id="loginPanel">
       <h2>Login Admin</h2>
-      <p>Masuk dengan akun Firebase admin untuk mengubah konten website.</p>
+      <p>Masukkan kode admin website untuk mengubah konten. Tidak perlu akun Firebase.</p>
       <div class="field">
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" type="email" autocomplete="email" placeholder="admin@elevaree.academy" />
-      </div>
-      <div class="field">
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password admin" />
+        <label for="adminCode">Kode Admin</label>
+        <input id="adminCode" type="password" autocomplete="current-password" placeholder="Masukkan kode admin" onkeydown="if(event.key==='Enter') login()" />
       </div>
       <button class="btn btn-primary" type="button" onclick="login()">Masuk</button>
-      <p class="small-note">Jika login atau simpan data gagal, pastikan Firebase Auth dan Firestore Rules sudah aktif untuk akun admin.</p>
+      <p class="small-note">Jika login atau simpan data gagal, aktifkan Firebase Auth provider <strong>Anonymous</strong> dan publish Firestore Rules yang ada di repo.</p>
     </section>
 
     <main id="adminApp" class="hidden">
@@ -429,6 +425,8 @@
       measurementId: "G-PFBMVYLBPR"
     };
 
+    const ADMIN_CODE = 'ELEVAREE2026';
+
     const defaultHome = {
       heroEyebrow: 'English Course Premium',
       heroTitle: 'Speak Up,',
@@ -496,13 +494,21 @@
     async function login() {
       try {
         initFirebase();
-        await auth.signInWithEmailAndPassword(getValue('loginEmail'), getValue('loginPassword'));
+        if (getValue('adminCode') !== ADMIN_CODE) {
+          toast('Kode admin salah.');
+          return;
+        }
+        await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        await auth.signInAnonymously();
+        sessionStorage.setItem('elevareeAdminUnlocked', 'true');
+        setValue('adminCode', '');
       } catch (error) {
         toast(`Login gagal: ${error.message}`);
       }
     }
 
     async function logout() {
+      sessionStorage.removeItem('elevareeAdminUnlocked');
       await auth.signOut();
     }
 
@@ -717,7 +723,7 @@
         document.getElementById('loginPanel').classList.toggle('hidden', loggedIn);
         document.getElementById('adminApp').classList.toggle('hidden', !loggedIn);
         document.getElementById('logoutBtn').classList.toggle('hidden', !loggedIn);
-        document.getElementById('authStatus').textContent = loggedIn ? (user.email || 'Admin login') : 'Belum login';
+        document.getElementById('authStatus').textContent = loggedIn ? 'Admin aktif' : 'Belum login';
         if (loggedIn) {
           try {
             await loadAll();
