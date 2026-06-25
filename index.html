@@ -65,8 +65,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="supabase-config.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2005,17 +2005,13 @@ Konsultasi gratis, tidak ada kewajiban daftar! 😊`
       window.open(`https://wa.me/6282261301538?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // ── Admin CMS bridge: public read, static fallback ──
-    const adminFirebaseConfig = {
-      apiKey: "AIzaSyAluHn1_-fOpvk4uREGDLu8RRtHM5aWGGo",
-      authDomain: "elevareeacademy-2281a.firebaseapp.com",
-      databaseURL: "https://elevareeacademy-2281a-default-rtdb.firebaseio.com",
-      projectId: "elevareeacademy-2281a",
-      storageBucket: "elevareeacademy-2281a.firebasestorage.app",
-      messagingSenderId: "735519195892",
-      appId: "1:735519195892:web:e11f27bd88a3de5ebb94a1",
-      measurementId: "G-PFBMVYLBPR"
-    };
+    // ── Supabase CMS bridge: public read, static fallback ──
+    function getSupabaseClient() {
+      const config = window.ELEVAREE_SUPABASE || {};
+      const hasConfig = config.url && config.anonKey && !config.url.includes('PASTE_') && !config.anonKey.includes('PASTE_');
+      if (!hasConfig || !window.supabase?.createClient) return null;
+      return window.supabase.createClient(config.url, config.anonKey);
+    }
 
     const programNameAliases = {
       'ielts class': 'IELTS Preparation',
@@ -2069,7 +2065,7 @@ Konsultasi gratis, tidak ada kewajiban daftar! 😊`
           const card = cards.find(item => item.querySelector('.prog-name')?.textContent.trim() === name);
           if (!card) return;
 
-          const desc = cmsText(program.desc);
+      const desc = cmsText(program.description || program.desc);
           const price = formatCmsPrice(program.price);
           const note = formatProgramNote(program);
           const category = cmsText(program.category);
@@ -2139,11 +2135,12 @@ Konsultasi gratis, tidak ada kewajiban daftar! 😊`
 
     function updateHomeContent(content) {
       if (!content) return;
-      const eyebrow = cmsText(content.heroEyebrow);
-      const heroTitle = cmsText(content.heroTitle);
-      const heroHighlight = cmsText(content.heroHighlight);
-      const heroSuffix = cmsText(content.heroSuffix);
-      const heroSub = cmsText(content.heroSub);
+      const source = content.content || content;
+      const eyebrow = cmsText(source.heroEyebrow);
+      const heroTitle = cmsText(source.heroTitle);
+      const heroHighlight = cmsText(source.heroHighlight);
+      const heroSuffix = cmsText(source.heroSuffix);
+      const heroSub = cmsText(source.heroSub);
 
       if (eyebrow) document.querySelector('.hero-eyebrow').textContent = eyebrow;
       if (heroTitle || heroHighlight || heroSuffix) {
@@ -2158,20 +2155,23 @@ Konsultasi gratis, tidak ada kewajiban daftar! 😊`
     }
 
     async function connectAdminContent() {
-      if (!window.firebase?.firestore) return;
+      const supabaseClient = getSupabaseClient();
+      if (!supabaseClient) return;
       try {
-        if (!firebase.apps.length) firebase.initializeApp(adminFirebaseConfig);
-        const db = firebase.firestore();
-        const [programSnap, scheduleSnap, homeSnap] = await Promise.all([
-          db.collection('programs').get(),
-          db.collection('schedules').get(),
-          db.collection('siteContent').doc('home').get()
+        const [programResult, scheduleResult, homeResult] = await Promise.all([
+          supabaseClient.from('programs').select('*').order('sort_order', { ascending: true }).order('name', { ascending: true }),
+          supabaseClient.from('schedules').select('*').order('sort_order', { ascending: true }).order('program', { ascending: true }),
+          supabaseClient.from('site_content').select('content').eq('key', 'home').maybeSingle()
         ]);
-        updateHomeContent(homeSnap.exists ? homeSnap.data() : null);
-        updateProgramCards(programSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        updateScheduleTables(scheduleSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        if (programResult.error) throw programResult.error;
+        if (scheduleResult.error) throw scheduleResult.error;
+        if (homeResult.error) throw homeResult.error;
+
+        updateHomeContent(homeResult.data);
+        updateProgramCards(programResult.data || []);
+        updateScheduleTables(scheduleResult.data || []);
       } catch (error) {
-        console.warn('Admin content belum bisa dibaca, memakai konten statis.', error);
+        console.warn('Konten Supabase belum bisa dibaca, memakai konten statis.', error);
       }
     }
 

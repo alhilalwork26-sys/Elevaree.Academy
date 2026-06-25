@@ -9,9 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="supabase-config.js"></script>
   <style>
     :root {
       --pink: #BC6186;
@@ -228,13 +227,13 @@
 
     <section class="login-card" id="loginPanel">
       <h2>Login Admin</h2>
-      <p>Masukkan kode admin website untuk mengubah konten. Tidak perlu akun Firebase.</p>
+      <p>Masukkan kode admin website untuk mengubah konten. Tidak perlu akun Supabase.</p>
       <div class="field">
         <label for="adminCode">Kode Admin</label>
         <input id="adminCode" type="password" autocomplete="current-password" placeholder="Masukkan kode admin" onkeydown="if(event.key==='Enter') login()" />
       </div>
       <button class="btn btn-primary" type="button" onclick="login()">Masuk</button>
-      <p class="small-note">Jika login atau simpan data gagal, aktifkan Firebase Auth provider <strong>Anonymous</strong> dan publish Firestore Rules yang ada di repo.</p>
+      <p class="small-note">Jika login atau simpan data gagal, pastikan `SUPABASE_SETUP.sql` sudah dijalankan dan `supabase-config.js` sudah berisi Project URL + anon key.</p>
     </section>
 
     <main id="adminApp" class="hidden">
@@ -414,19 +413,6 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAluHn1_-fOpvk4uREGDLu8RRtHM5aWGGo",
-      authDomain: "elevareeacademy-2281a.firebaseapp.com",
-      databaseURL: "https://elevareeacademy-2281a-default-rtdb.firebaseio.com",
-      projectId: "elevareeacademy-2281a",
-      storageBucket: "elevareeacademy-2281a.firebasestorage.app",
-      messagingSenderId: "735519195892",
-      appId: "1:735519195892:web:e11f27bd88a3de5ebb94a1",
-      measurementId: "G-PFBMVYLBPR"
-    };
-
-    const ADMIN_CODE = 'ELEVAREE2026';
-
     const defaultHome = {
       heroEyebrow: 'English Course Premium',
       heroTitle: 'Speak Up,',
@@ -450,17 +436,20 @@
       { id:'ielts-saturday-0900', program:'IELTS Preparation', day:'Saturday', time:'09:00 - 10:00', tutor:'Ms. Rina', room:'Zoom Class', quota:'10', status:'Open', note:'Simulasi speaking' }
     ];
 
-    let app;
-    let auth;
-    let db;
+    let supabaseClient;
+    let adminCode = sessionStorage.getItem('elevareeAdminCode') || '';
     let programs = [];
     let schedules = [];
 
-    function initFirebase() {
-      if (app) return;
-      app = firebase.initializeApp(firebaseConfig);
-      auth = firebase.auth();
-      db = firebase.firestore();
+    function initSupabase() {
+      if (supabaseClient) return supabaseClient;
+      const config = window.ELEVAREE_SUPABASE || {};
+      const hasConfig = config.url && config.anonKey && !config.url.includes('PASTE_') && !config.anonKey.includes('PASTE_');
+      if (!hasConfig || !window.supabase?.createClient) {
+        throw new Error('Supabase belum dikonfigurasi. Isi supabase-config.js dengan Project URL dan anon key.');
+      }
+      supabaseClient = window.supabase.createClient(config.url, config.anonKey);
+      return supabaseClient;
     }
 
     function slugify(value) {
@@ -493,23 +482,35 @@
 
     async function login() {
       try {
-        initFirebase();
-        if (getValue('adminCode') !== ADMIN_CODE) {
+        const client = initSupabase();
+        const code = getValue('adminCode');
+        const { data, error } = await client.rpc('is_admin_code', { p_code: code });
+        if (error) throw error;
+        if (!data) {
           toast('Kode admin salah.');
           return;
         }
-        await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
-        await auth.signInAnonymously();
-        sessionStorage.setItem('elevareeAdminUnlocked', 'true');
+        adminCode = code;
+        sessionStorage.setItem('elevareeAdminCode', code);
         setValue('adminCode', '');
+        setLoggedIn(true);
+        await loadAll();
       } catch (error) {
         toast(`Login gagal: ${error.message}`);
       }
     }
 
-    async function logout() {
-      sessionStorage.removeItem('elevareeAdminUnlocked');
-      await auth.signOut();
+    function logout() {
+      adminCode = '';
+      sessionStorage.removeItem('elevareeAdminCode');
+      setLoggedIn(false);
+    }
+
+    function setLoggedIn(loggedIn) {
+      document.getElementById('loginPanel').classList.toggle('hidden', loggedIn);
+      document.getElementById('adminApp').classList.toggle('hidden', !loggedIn);
+      document.getElementById('logoutBtn').classList.toggle('hidden', !loggedIn);
+      document.getElementById('authStatus').textContent = loggedIn ? 'Admin aktif' : 'Belum login';
     }
 
     function showTab(name) {
@@ -522,8 +523,10 @@
     }
 
     async function loadHome() {
-      const doc = await db.collection('siteContent').doc('home').get();
-      const data = doc.exists ? doc.data() : defaultHome;
+      const client = initSupabase();
+      const { data: row, error } = await client.from('site_content').select('content').eq('key', 'home').maybeSingle();
+      if (error) throw error;
+      const data = row?.content || defaultHome;
       Object.entries({ ...defaultHome, ...data }).forEach(([key, value]) => setValue(key, value));
     }
 
@@ -533,16 +536,23 @@
         heroTitle: getValue('heroTitle'),
         heroHighlight: getValue('heroHighlight'),
         heroSuffix: getValue('heroSuffix'),
-        heroSub: getValue('heroSub'),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        heroSub: getValue('heroSub')
       };
-      await db.collection('siteContent').doc('home').set(data, { merge: true });
+      const client = initSupabase();
+      const { error } = await client.rpc('admin_upsert_site_content', {
+        p_admin_code: adminCode,
+        p_key: 'home',
+        p_content: data
+      });
+      if (error) throw error;
       toast('Hero website disimpan.');
     }
 
     async function loadPrograms() {
-      const snap = await db.collection('programs').get();
-      programs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+      const client = initSupabase();
+      const { data, error } = await client.from('programs').select('*').order('sort_order', { ascending: true }).order('name', { ascending: true });
+      if (error) throw error;
+      programs = data || [];
       renderPrograms();
       document.getElementById('programCount').textContent = programs.length;
       document.getElementById('programNames').innerHTML = programs.map(item => `<option value="${escapeHtml(item.name || '')}"></option>`).join('');
@@ -583,7 +593,7 @@
       setValue('programDuration', item.duration);
       setValue('programCapacity', item.capacity);
       setValue('programStatus', item.status || 'Active');
-      setValue('programDesc', item.desc);
+      setValue('programDesc', item.description || item.desc);
       window.scrollTo({ top: document.getElementById('tab-programs').offsetTop - 20, behavior: 'smooth' });
     }
 
@@ -598,10 +608,14 @@
         duration: getValue('programDuration'),
         capacity: getValue('programCapacity'),
         status: getValue('programStatus') || 'Active',
-        desc: getValue('programDesc'),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        description: getValue('programDesc')
       };
-      await db.collection('programs').doc(id).set(data, { merge: true });
+      const client = initSupabase();
+      const { error } = await client.rpc('admin_upsert_program', {
+        p_admin_code: adminCode,
+        p_program: { id, ...data }
+      });
+      if (error) throw error;
       clearProgramForm();
       await loadPrograms();
       toast('Program disimpan.');
@@ -609,21 +623,40 @@
 
     async function deleteProgram(id) {
       if (!confirm('Hapus program ini?')) return;
-      await db.collection('programs').doc(id).delete();
+      const client = initSupabase();
+      const { error } = await client.rpc('admin_delete_program', { p_admin_code: adminCode, p_id: id });
+      if (error) throw error;
       await loadPrograms();
       toast('Program dihapus.');
     }
 
     async function seedPrograms() {
       if (!confirm('Isi/update program default Elevaree?')) return;
-      await Promise.all(defaultPrograms.map(item => db.collection('programs').doc(item.id).set({ ...item, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true })));
+      const client = initSupabase();
+      const results = await Promise.all(defaultPrograms.map(item => client.rpc('admin_upsert_program', {
+        p_admin_code: adminCode,
+        p_program: {
+          id: item.id,
+          name: item.name,
+          category: item.category,
+          price: item.price,
+          duration: item.duration,
+          capacity: item.capacity,
+          status: item.status,
+          description: item.desc
+        }
+      })));
+      const failed = results.find(result => result.error);
+      if (failed) throw failed.error;
       await loadPrograms();
       toast('Program default disimpan.');
     }
 
     async function loadSchedules() {
-      const snap = await db.collection('schedules').get();
-      schedules = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => String(a.program || a.programName || '').localeCompare(String(b.program || b.programName || '')));
+      const client = initSupabase();
+      const { data, error } = await client.from('schedules').select('*').order('sort_order', { ascending: true }).order('program', { ascending: true });
+      if (error) throw error;
+      schedules = data || [];
       renderSchedules();
       document.getElementById('scheduleCount').textContent = schedules.length;
     }
@@ -679,15 +712,18 @@
         day: getValue('scheduleDay'),
         time: getValue('scheduleTime'),
         tutor: getValue('scheduleTutor'),
-        tutorName: getValue('scheduleTutor'),
         room: getValue('scheduleRoom') || 'Zoom Class',
         quota: getValue('scheduleQuota') || '10',
         capacity: Number(getValue('scheduleQuota')) || 10,
         status: getValue('scheduleStatus') || 'Open',
-        note: getValue('scheduleNote'),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        note: getValue('scheduleNote')
       };
-      await db.collection('schedules').doc(id).set(data, { merge: true });
+      const client = initSupabase();
+      const { error } = await client.rpc('admin_upsert_schedule', {
+        p_admin_code: adminCode,
+        p_schedule: { id, ...data }
+      });
+      if (error) throw error;
       clearScheduleForm();
       await loadSchedules();
       toast('Jadwal disimpan.');
@@ -695,14 +731,33 @@
 
     async function deleteSchedule(id) {
       if (!confirm('Hapus jadwal ini?')) return;
-      await db.collection('schedules').doc(id).delete();
+      const client = initSupabase();
+      const { error } = await client.rpc('admin_delete_schedule', { p_admin_code: adminCode, p_id: id });
+      if (error) throw error;
       await loadSchedules();
       toast('Jadwal dihapus.');
     }
 
     async function seedSchedules() {
       if (!confirm('Isi/update jadwal default Elevaree?')) return;
-      await Promise.all(defaultSchedules.map(item => db.collection('schedules').doc(item.id).set({ ...item, capacity: Number(item.quota) || 10, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true })));
+      const client = initSupabase();
+      const results = await Promise.all(defaultSchedules.map(item => client.rpc('admin_upsert_schedule', {
+        p_admin_code: adminCode,
+        p_schedule: {
+          id: item.id,
+          program: item.program,
+          day: item.day,
+          time: item.time,
+          tutor: item.tutor,
+          room: item.room,
+          quota: item.quota,
+          capacity: Number(item.quota) || 10,
+          status: item.status,
+          note: item.note
+        }
+      })));
+      const failed = results.find(result => result.error);
+      if (failed) throw failed.error;
       await loadSchedules();
       toast('Jadwal default disimpan.');
     }
@@ -716,22 +771,16 @@
         .replaceAll("'", '&#039;');
     }
 
-    window.addEventListener('load', () => {
-      initFirebase();
-      auth.onAuthStateChanged(async user => {
-        const loggedIn = Boolean(user);
-        document.getElementById('loginPanel').classList.toggle('hidden', loggedIn);
-        document.getElementById('adminApp').classList.toggle('hidden', !loggedIn);
-        document.getElementById('logoutBtn').classList.toggle('hidden', !loggedIn);
-        document.getElementById('authStatus').textContent = loggedIn ? 'Admin aktif' : 'Belum login';
-        if (loggedIn) {
-          try {
-            await loadAll();
-          } catch (error) {
-            toast(`Gagal memuat data: ${error.message}`);
-          }
+    window.addEventListener('load', async () => {
+      setLoggedIn(Boolean(adminCode));
+      if (adminCode) {
+        try {
+          initSupabase();
+          await loadAll();
+        } catch (error) {
+          toast(`Gagal memuat data: ${error.message}`);
         }
-      });
+      }
     });
   </script>
 </body>
